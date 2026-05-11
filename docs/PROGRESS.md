@@ -4,11 +4,14 @@ Master tracker for `lgdweb-hub` slices.
 
 States: `not started` · `in progress` · `in review` · `merged`.
 
+**Merge target**: `develop` (PR per slice). `main` only receives the integration PR
+`develop → main` at the **slice 6 checkpoint** (first prod deploy).
+
 ## Slices
 
 | # | Slice                    | Issue | Branch                   | State       |
 | - | ------------------------ | ----- | ------------------------ | ----------- |
-| 1 | Foundations + CI         | –     | `feature/foundations-ci` | not started |
+| 1 | Foundations + CI         | #1    | `feature/foundations-ci` | not started |
 | 2 | Snake                    | –     | –                        | not started |
 | 3 | Tic-Tac-Toe + Memory     | –     | –                        | not started |
 | 4 | Portfolio                | –     | –                        | not started |
