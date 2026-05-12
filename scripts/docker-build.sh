@@ -27,6 +27,7 @@ main() {
   docker buildx build \
     -f docker/Dockerfile \
     --network=host \
+    --load \
     -t "$imageName" \
     .
 
