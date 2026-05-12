@@ -13,7 +13,7 @@ branch column shows where the work lives; `–` means not started yet.
 | # | Slice                    | Issue | Branch                   | Done |
 | - | ------------------------ | ----- | ------------------------ | ---- |
 | 1 | Foundations + CI         | #1    | `feature/foundations-ci` | [x]  |
-| 2 | Snake                    | –     | –                        | [ ]  |
+| 2 | Snake                    | #3    | `feature/snake`          | [ ]  |
 | 3 | Tic-Tac-Toe + Memory     | –     | –                        | [ ]  |
 | 4 | Portfolio                | –     | –                        | [ ]  |
 | 5 | Game of Life             | –     | –                        | [ ]  |
