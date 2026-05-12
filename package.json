@@ -1,0 +1,53 @@
+{
+  "name": "lgdweb-hub",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "simple-git-hooks",
+    "dev": "vite --host",
+    "build": "vite build",
+    "start": "bun src/server/index.ts",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint --write .",
+    "lint:check": "biome lint .",
+    "typecheck": "tsgo -p tsconfig.client.json --noEmit && tsgo -p tsconfig.server.json --noEmit",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "docker:build": "scripts/docker-build.sh",
+    "docker:push": "docker push lgdweb/lgdweb-hub:latest"
+  },
+  "dependencies": {
+    "@fontsource/geist-mono": "^5.2.7",
+    "@fontsource/geist-sans": "^5.2.5",
+    "hono": "^4.9.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@commitlint/cli": "^21.0.0",
+    "@commitlint/config-conventional": "^21.0.0",
+    "@tailwindcss/vite": "^4.1.7",
+    "@types/bun": "^1.2.0",
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "@typescript/native-preview": "^7.0.0-dev.20260421.2",
+    "@vitejs/plugin-react": "^5.0.0",
+    "lint-staged": "^17.0.4",
+    "simple-git-hooks": "^2.13.1",
+    "tailwindcss": "^4.1.7",
+    "vite": "^7.0.0",
+    "vite-tsconfig-paths": "^6.1.1"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "bunx lint-staged",
+    "commit-msg": "bunx --no -- commitlint --edit $1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,json,css,md}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  }
+}
