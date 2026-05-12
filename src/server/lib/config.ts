@@ -14,7 +14,7 @@ const parsePort = (raw: string | undefined): number => {
   if (raw === undefined) return 3000
 
   const parsed = Number.parseInt(raw, 10)
-  if (Number.isNaN(parsed) || parsed <= 0) return 3000
+  if (Number.isNaN(parsed) || parsed <= 0 || parsed > 65535) return 3000
 
   return parsed
 }

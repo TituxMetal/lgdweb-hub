@@ -14,6 +14,8 @@ describe('loadConfig', () => {
     expect(loadConfig({ PORT: 'not-a-number' }).port).toBe(3000)
     expect(loadConfig({ PORT: '0' }).port).toBe(3000)
     expect(loadConfig({ PORT: '-1' }).port).toBe(3000)
+    expect(loadConfig({ PORT: '65536' }).port).toBe(3000)
+    expect(loadConfig({ PORT: '99999' }).port).toBe(3000)
   })
 
   test('reads HOST when set', () => {
