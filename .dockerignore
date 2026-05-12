@@ -1,1 +1,11 @@
-node_modules dist .git .github .claude .env .env._ .vscode docs CLAUDE.md _.log
+node_modules
+dist
+.git
+.github
+.claude
+.env
+.env.*
+.vscode
+docs
+CLAUDE.md
+*.log
