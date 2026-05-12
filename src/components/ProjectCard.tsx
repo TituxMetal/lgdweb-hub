@@ -52,7 +52,13 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
   if (external !== null) {
     return (
-      <a href={external} target='_blank' rel='noopener noreferrer' className='block'>
+      <a
+        href={external}
+        target='_blank'
+        rel='noopener noreferrer'
+        aria-label={`${project.title} (ouvre un nouvel onglet)`}
+        className='block'
+      >
         <CardBody project={project} />
       </a>
     )
