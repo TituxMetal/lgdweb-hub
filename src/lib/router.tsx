@@ -108,9 +108,18 @@ type LinkProps = {
   className?: string
 }
 
-/** Anchor that intercepts the click to call `navigate(to)` instead of a full reload. */
+/**
+ * Anchor that intercepts plain left-clicks to call `navigate(to)` instead of a
+ * full reload. Modifier keys (Cmd/Ctrl/Shift/Alt), non-left mouse buttons and
+ * already-prevented events fall through to the native anchor so the browser can
+ * open a new tab, copy the URL, etc.
+ */
 export const Link = ({ to, children, className }: LinkProps) => {
   const onClick = (event: MouseEvent<HTMLAnchorElement>): void => {
+    if (event.defaultPrevented) return
+    if (event.button !== 0) return
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+
     event.preventDefault()
     navigate(to)
   }
