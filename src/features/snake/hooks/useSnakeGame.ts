@@ -51,6 +51,11 @@ export const useSnakeGame = ({ gridSize }: UseSnakeGameInput): UseSnakeGameResul
       lastTimeRef.current = now
 
       while (accumulatorRef.current >= stateRef.current.delay) {
+        // Capture the delay *before* `tick` runs: `tick` can lower it (speedup
+        // milestone every 5 points), and subtracting the new value would leave
+        // a few ms of phantom time in the accumulator and drift toward early
+        // ticks over a long game.
+        const stepDelay = stateRef.current.delay
         const pending = directionQueueRef.current.shift()
         if (pending !== undefined) {
           stateRef.current = {
@@ -59,7 +64,7 @@ export const useSnakeGame = ({ gridSize }: UseSnakeGameInput): UseSnakeGameResul
           }
         }
         stateRef.current = tick(stateRef.current)
-        accumulatorRef.current -= stateRef.current.delay
+        accumulatorRef.current -= stepDelay
         if (stateRef.current.status !== 'running') break
       }
 
