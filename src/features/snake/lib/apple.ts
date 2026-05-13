@@ -15,8 +15,11 @@ export const createApple = (position: Cell): Apple => ({ position })
 // 1. Bounded random retry — cheap and always wins when the snake is small.
 // 2. Linear scan fallback — guarantees termination when the snake fills most
 //    of the grid (theoretical, but cleaner than an unbounded loop).
-// If the grid is entirely full, returning [0,0] is fine: the next tick will
-// detect the self-collision and end the game.
+// If the grid is entirely full (the snake just ate the last free cell), the
+// fallback returns [0, 0] which sits on the snake. The next tick ends the
+// game anyway — `ateApple` is true so `advance` won't pop the tail, and the
+// new head either runs out of bounds or onto a body cell. The apple's
+// position never gets to render meaningfully.
 export const placeApple = (
   gridSize: GridSize,
   snake: Snake,
