@@ -1,8 +1,11 @@
+import { lazy } from 'react'
 import { BackToList } from '~/components/BackToList'
 import { Layout } from '~/components/Layout'
 import { projects } from '~/data/projects'
 import { Home } from '~/features/home'
 import { type RouteDefinition, RouterView } from '~/lib/router'
+
+const Snake = lazy(() => import('~/features/snake'))
 
 const ProjectPlaceholder = ({ slug }: { slug: string }) => {
   const project = projects.find((entry) => entry.slug === slug)
@@ -26,6 +29,11 @@ const ProjectPlaceholder = ({ slug }: { slug: string }) => {
   )
 }
 
+const renderProject = (slug: string) => {
+  if (slug === 'snake') return <Snake />
+  return <ProjectPlaceholder slug={slug} />
+}
+
 const NotFound = () => (
   <section className='space-y-4'>
     <BackToList />
@@ -37,7 +45,7 @@ const routes: RouteDefinition[] = [
   { pattern: '/', render: () => <Home /> },
   {
     pattern: '/projects/:slug',
-    render: (params) => <ProjectPlaceholder slug={params.slug ?? ''} />
+    render: (params) => renderProject(params.slug ?? '')
   }
 ]
 
