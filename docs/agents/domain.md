@@ -12,8 +12,8 @@ codebase.
 
 This repo's own records sit alongside them and are read the same way:
 
-- **`docs/SPECS.md`** — the consolidated design of the showroom and its slices.
-- **`docs/PROGRESS.md`** — the slice tracker, and the reference issue numbers.
+- **`docs/plans/showroom.md`** — the design record of the showroom unit: the WHAT its tickets
+descend from.
 
 If any of these files don't exist, **proceed silently**. Don't flag their absence; don't
 suggest creating them upfront. The `/domain-modeling` skill (reached via `/grill-with-docs`
@@ -28,8 +28,7 @@ resolved.
 ├── docs/adr/                   ← created when the first decision lands
 │   ├── 0001-…
 │   └── 0002-…
-├── docs/SPECS.md
-├── docs/PROGRESS.md
+├── docs/plans/showroom.md      ← the unit's design record
 └── src/
 ```
 

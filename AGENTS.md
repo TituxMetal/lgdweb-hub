@@ -19,7 +19,8 @@ server, single package, Biome for lint and format.
 The originals — each feature's source and the source of its original colours — are frozen
 read-only at `~/archived/webdev/oldProjects/<project>/`.
 The showroom brainstorms and design (`brainstorm-overall.md`, `-server.md`, `-client.md`,
-`-visual-identity.md`, `design.md` — the source of `docs/SPECS.md`) are frozen read-only at
+`-visual-identity.md`, `design.md` — the source of the design record at `docs/plans/showroom.md`) are
+frozen read-only at
 `~/archived/webdev/projects-ideas/showroom/`.
 
 ## Verify
@@ -74,7 +75,7 @@ The five canonical state roles keep their own names (`ready-for-agent` is the on
 
 ### Domain docs
 
-Single-context: `CONTEXT.md` and `docs/adr/` at the root, next to this repo's `docs/SPECS.md` and `docs/PROGRESS.md`. See `docs/agents/domain.md`.
+Single-context: `CONTEXT.md` and `docs/adr/` at the root, next to the unit's design record at `docs/plans/showroom.md`. See `docs/agents/domain.md`.
 
 ## Where artifacts go
 
@@ -94,8 +95,8 @@ Categories inside `docs/solutions/` are emergent: a sub-folder appears when a th
 **The spine** needs an ssh remote, `gh` authenticated, and signed commits from the
 global `commit.gpgsign`. It touches the default branch only for its own index entry.
 
-`docs/SPECS.md` and `docs/PROGRESS.md` are this repo's own records: the consolidated design
-and the slice tracker. They are inputs, not template artifacts.
+`docs/plans/showroom.md` is the showroom unit's design record — the WHAT its tickets descend
+from, kept as history. Issue state is derived from GitHub, never from a file in the repo.
 
 ## Definition of done
 

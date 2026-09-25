@@ -26,7 +26,7 @@ Orthogonal to the triage roles above; `triage` leaves them alone.
 
 | Family | Applied by | Meaning |
 |---|---|---|
-| `slice/<n>-<name>` | the human, when `ticket` writes a set | the slice of `docs/PROGRESS.md` |
+| `slice/<n>-<name>` | legacy, from the retired tracker | the old tracker's delivery slice |
 | `area/<subsystem>` | the human, when `ticket` writes a set | the codebase area touched |
 | `review/required`, `review/optional` | the human | the merge gate |
 

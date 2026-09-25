@@ -21,7 +21,7 @@ Four families coexist. They are orthogonal — do not read one as a substitute f
 
 | Family | Meaning | Example |
 |---|---|---|
-| `slice/<n>-<name>` | one delivery slice of `docs/PROGRESS.md` | `slice/3-tic-tac-toe-memory` |
+| `slice/<n>-<name>` | legacy: the retired tracker's delivery slice, kept on the closed history | `slice/3-tic-tac-toe-memory` |
 | `area/<subsystem>` | the part of the codebase touched | `area/router`, `area/projects-snake` |
 | `review/<mode>` | the merge gate for this ticket | `review/required`, `review/optional` |
 | triage roles | the triage state machine | see `triage-labels.md` |
