@@ -49,6 +49,83 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: Smoke the composed server
+        run: |
+          base_url=http://127.0.0.1:3000
+          smoke_dir=$(mktemp -d)
+
+          bun src/server/index.ts &
+          server_pid=$!
+          cleanup() {
+            kill "$server_pid" 2>/dev/null || true
+            rm -rf "$smoke_dir"
+          }
+          trap cleanup EXIT
+
+          ready=false
+          for _ in $(seq 1 30); do
+            if curl --silent --fail --output /dev/null "$base_url/api/health"; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" != true ]; then
+            echo "server never answered $base_url/api/health within 30 attempts"
+            exit 1
+          fi
+
+          health_status=$(curl --silent --output "$smoke_dir/health.json" --write-out '%{http_code}' "$base_url/api/health")
+          health_body=$(cat "$smoke_dir/health.json")
+          root_status=$(curl --silent --output "$smoke_dir/root.html" --write-out '%{http_code}' "$base_url/")
+
+          kill "$server_pid"
+          wait "$server_pid" 2>/dev/null || true
+
+          if [ "$health_status" != 200 ]; then
+            echo "GET /api/health returned $health_status, expected 200"
+            exit 1
+          fi
+
+          if [ "$health_body" != '{"status":"ok"}' ]; then
+            echo "GET /api/health body was $health_body, expected {\"status\":\"ok\"}"
+            exit 1
+          fi
+
+          if [ "$root_status" != 200 ]; then
+            echo "GET / returned $root_status, expected 200"
+            exit 1
+          fi
+
+          if ! grep --quiet '<div id="root">' "$smoke_dir/root.html"; then
+            echo 'GET / did not serve the SPA shell: missing <div id="root">'
+            exit 1
+          fi
+
+          echo "GET /api/health -> $health_status $health_body"
+          echo 'GET / -> 200 with <div id="root">'
+
+      - name: No component specs
+        run: |
+          offenders=$(find src -type f \( -name '*.spec.tsx' -o -name '*.spec.jsx' \))
+
+          if [ -n "$offenders" ]; then
+            echo 'React components ship without unit specs; delete these files:'
+            printf '%s\n' "$offenders"
+            exit 1
+          fi
+
+      - name: No stray CSS
+        run: |
+          offenders=$(find src -type f -name '*.css' -not -path 'src/styles/*')
+
+          if [ -n "$offenders" ]; then
+            echo 'CSS must live under src/styles/; move these files:'
+            printf '%s\n' "$offenders"
+            exit 1
+          fi
+
   docker:
     name: Build and push image
     runs-on: ubuntu-latest
