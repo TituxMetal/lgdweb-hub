@@ -5,7 +5,7 @@ import { projects } from '~/data/projects'
 import { Home } from '~/features/home'
 import { type RouteDefinition, RouterView } from '~/lib/router'
 
-const Snake = lazy(() => import('~/features/snake'))
+const Snake = lazy(() => import('~/features/snake').then((m) => ({ default: m.Snake })))
 
 const ProjectPlaceholder = ({ slug }: { slug: string }) => {
   const project = projects.find((entry) => entry.slug === slug)

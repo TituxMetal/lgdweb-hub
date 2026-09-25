@@ -1,42 +1,42 @@
-import { describe, expect, mock, test } from 'bun:test'
+import { describe, expect, it, mock } from 'bun:test'
 import { createRouter, matchRoute } from '~/lib/router'
 
 describe('matchRoute', () => {
-  test('matches the root path against itself', () => {
+  it('matches the root path against itself', () => {
     expect(matchRoute('/', '/')).toEqual({})
   })
 
-  test('matches an identical static segment', () => {
+  it('matches an identical static segment', () => {
     expect(matchRoute('/projects', '/projects')).toEqual({})
   })
 
-  test('returns null when segment counts differ', () => {
+  it('returns null when segment counts differ', () => {
     expect(matchRoute('/projects', '/projects/snake')).toBeNull()
     expect(matchRoute('/projects/snake', '/projects')).toBeNull()
   })
 
-  test('returns null on a mismatched literal segment', () => {
+  it('returns null on a mismatched literal segment', () => {
     expect(matchRoute('/about', '/projects')).toBeNull()
   })
 
-  test('extracts a named param', () => {
+  it('extracts a named param', () => {
     expect(matchRoute('/projects/snake', '/projects/:slug')).toEqual({ slug: 'snake' })
   })
 
-  test('extracts several named params', () => {
+  it('extracts several named params', () => {
     expect(matchRoute('/users/42/posts/abc', '/users/:userId/posts/:postId')).toEqual({
       userId: '42',
       postId: 'abc'
     })
   })
 
-  test('treats trailing slashes as equivalent', () => {
+  it('treats trailing slashes as equivalent', () => {
     expect(matchRoute('/projects/', '/projects')).toEqual({})
   })
 })
 
 describe('createRouter', () => {
-  test('navigate calls pushState with the target url', () => {
+  it('navigate calls pushState with the target url', () => {
     const pushState = mock((_url: string) => {})
     const router = createRouter({ pushState, getPath: () => '/old' })
 
@@ -46,7 +46,7 @@ describe('createRouter', () => {
     expect(pushState).toHaveBeenCalledWith('/new')
   })
 
-  test('navigate notifies all subscribers', () => {
+  it('navigate notifies all subscribers', () => {
     const subA = mock(() => {})
     const subB = mock(() => {})
     const router = createRouter({ pushState: () => {}, getPath: () => '/old' })
@@ -59,7 +59,7 @@ describe('createRouter', () => {
     expect(subB).toHaveBeenCalledTimes(1)
   })
 
-  test('navigate to the current path is a no-op', () => {
+  it('navigate to the current path is a no-op', () => {
     const pushState = mock((_url: string) => {})
     const subscriber = mock(() => {})
     const router = createRouter({ pushState, getPath: () => '/same' })
@@ -71,7 +71,7 @@ describe('createRouter', () => {
     expect(subscriber).not.toHaveBeenCalled()
   })
 
-  test('subscribe returns an unsubscribe function', () => {
+  it('subscribe returns an unsubscribe function', () => {
     const subscriber = mock(() => {})
     const router = createRouter({ pushState: () => {}, getPath: () => '/old' })
 

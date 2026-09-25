@@ -1,3 +1,1 @@
-import { Snake } from './components/Snake'
-
-export default Snake
+export { Snake } from './components/Snake'

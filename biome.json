@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "plugins": ["./plugins/no-arbitrary-colors.grit"],
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -23,13 +24,37 @@
       "style": {
         "useImportType": "error",
         "useNamingConvention": "off",
-        "noUnusedTemplateLiteral": "off"
+        "noUnusedTemplateLiteral": "off",
+        "noDefaultExport": "error",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "bun:test": {
+                "importNames": ["test"],
+                "message": "Specs use describe + it. Do not import `test` from `bun:test`."
+              }
+            }
+          }
+        }
       },
       "suspicious": {
         "noConsole": "warn"
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["src/server/index.ts", "vite.config.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
       "semicolons": "asNeeded",

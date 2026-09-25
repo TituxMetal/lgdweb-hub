@@ -1,0 +1,21 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+// Tailwind class strings must use palette tokens (e.g. `bg-red-500`), never arbitrary
+// colour literals in bracket syntax (`bg-[#ff0000]`, `text-[rgb(1,2,3)]`).
+// Arbitrary lengths stay legal: `text-[10px]` is not flagged.
+//
+// Engine limits (biome 2.4.15, `engine biome(1.0)`): one top-level pattern per file, so each new
+// rule gets its own plugin file; regex groups must be non-capturing `(?:…)`; the compiler accepts
+// `JsStringLiteralExpression`, `JsxString` and `JsTemplateChunkElement` here, not `JsStringLiteral`.
+or {
+  JsStringLiteralExpression() as $classString,
+  JsxString() as $classString,
+  JsTemplateChunkElement() as $classString
+} where {
+  $classString <: r".*-\[[^\]]*(?:#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b|(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color|color-mix|light-dark)\([^\]]*\))[^\]]*\].*",
+  register_diagnostic(
+    span = $classString,
+    message = "Arbitrary colour value in a class string. Use a palette token instead."
+  )
+}
