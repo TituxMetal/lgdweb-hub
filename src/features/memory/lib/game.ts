@@ -19,11 +19,15 @@ export const createGameState = (rng: () => number = Math.random): GameState => (
 /**
  * One click on one card.
  *
- * A click is ignored when the board is locked by a miss (index.js:16), when the
- * card is already face up or matched (the original removes the listener of a
- * matched card, index.js:30-34), and when it is the first card clicked again —
- * the original resets its first-card slot without turning anything back
- * (index.js:9).
+ * A click is ignored when the board is locked by a miss (index.js:16), and when
+ * the card is already face up or matched — the latter because the original
+ * removes a matched card's listener (index.js:30-34), the former because a
+ * revealed card cannot be revealed twice.
+ *
+ * Clicking the pending first card again changes nothing either: the original
+ * calls `resetBoard()` at `index.js:9`, then the lines right after it set
+ * `firstCard = this` again (`index.js:14-18`), so the card stays the pending
+ * pick and the next card clicked is still scored as its partner.
  *
  * A pair attempt counts as one move when its second card is revealed, whether
  * it matches or not: that is what a run's score measures.
@@ -32,15 +36,10 @@ export const flip = (state: GameState, id: number): GameState => {
   if (state.locked || state.status === 'won') return state
 
   const card = state.cards.find((entry) => entry.id === id)
-  if (card === undefined) return state
-
-  // The first card clicked again: the original clears its first-card slot and
-  // leaves the card face up (index.js:9), so the next card starts a new attempt
-  // instead of being scored as the second half of this one. Checked before the
-  // down-status guard, which the pending card no longer satisfies.
-  if (state.picks.length === 1 && state.picks[0] === id) return { ...state, picks: [] }
-
-  if (card.status !== 'down') return state
+  // Also covers the pending first card clicked a second time: the original's
+  // `resetBoard()` runs at `index.js:9`, but `firstCard = this` is set again
+  // right after (`index.js:14-18`), so the pick stands (see the docblock).
+  if (card === undefined || card.status !== 'down') return state
 
   const revealed = state.cards.map((entry) =>
     entry.id === id ? { ...entry, status: 'up' as const } : entry
