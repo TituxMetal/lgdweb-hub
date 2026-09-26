@@ -31,10 +31,10 @@ export const useActiveSection = (): SectionId | null => {
           else intersecting.delete(entry.target.id)
         }
 
-        // Nothing crossing the midline keeps the previous mark rather than
-        // blanking it mid-scroll.
-        const next = pickActiveSection(SECTION_IDS, intersecting)
-        if (next !== null) setActive(next)
+        // No section crossing the midline clears the mark: the hero above the
+        // first section and the footer below the last leave the navigation
+        // unmarked, rather than pointing at a section the reader has left.
+        setActive(pickActiveSection(SECTION_IDS, intersecting))
       },
       { rootMargin: MIDLINE_MARGIN }
     )
