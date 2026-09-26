@@ -1,5 +1,42 @@
 import { describe, expect, it, mock } from 'bun:test'
-import { createRouter, matchRoute } from '~/lib/router'
+import type { MouseEvent } from 'react'
+import { createRouter, isPlainLeftClick, matchRoute } from '~/lib/router'
+
+type ClickEvent = MouseEvent<HTMLAnchorElement>
+
+/** An event as the predicate reads it; no DOM is involved. */
+const click = (overrides: Partial<ClickEvent>): ClickEvent =>
+  ({
+    defaultPrevented: false,
+    button: 0,
+    metaKey: false,
+    ctrlKey: false,
+    shiftKey: false,
+    altKey: false,
+    ...overrides
+  }) as ClickEvent
+
+describe('isPlainLeftClick', () => {
+  it('accepts a plain left click', () => {
+    expect(isPlainLeftClick(click({}))).toBe(true)
+  })
+
+  it('refuses an event the page has already handled', () => {
+    expect(isPlainLeftClick(click({ defaultPrevented: true }))).toBe(false)
+  })
+
+  it('refuses the middle and right buttons', () => {
+    expect(isPlainLeftClick(click({ button: 1 }))).toBe(false)
+    expect(isPlainLeftClick(click({ button: 2 }))).toBe(false)
+  })
+
+  it('refuses every modifier, so the browser can open a new tab', () => {
+    expect(isPlainLeftClick(click({ metaKey: true }))).toBe(false)
+    expect(isPlainLeftClick(click({ ctrlKey: true }))).toBe(false)
+    expect(isPlainLeftClick(click({ shiftKey: true }))).toBe(false)
+    expect(isPlainLeftClick(click({ altKey: true }))).toBe(false)
+  })
+})
 
 describe('matchRoute', () => {
   it('matches the root path against itself', () => {
