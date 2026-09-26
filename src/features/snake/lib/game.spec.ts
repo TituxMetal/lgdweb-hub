@@ -5,9 +5,14 @@ import { createSnake } from './snake'
 
 const gridSize: GridSize = { width: 10, height: 10 }
 
+// `createInitialState` places the apple at random, so a test that drives the
+// snake forward could have its head land on it — scoring, and eating the cell
+// the assertions then read. Pin it off every path these tests drive; the tests
+// that care about the apple set their own.
 const running = (overrides: Partial<GameState> = {}): GameState => ({
   ...createInitialState(gridSize),
   status: 'running',
+  apple: { position: [9, 9] },
   ...overrides
 })
 
