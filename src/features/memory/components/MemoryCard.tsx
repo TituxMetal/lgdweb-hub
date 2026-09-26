@@ -49,11 +49,11 @@ export const MemoryCard = ({ card, position, onFlip }: MemoryCardProps) => {
     >
       {/* The card back: the original's `backFace.svg` motif on the `$cardBg` plate
           (`_board.scss:38-48`). The button names the card, so the art is decorative. */}
-      <span className='absolute inset-0 rounded-[5px] border border-neutral-100/50 bg-violet-800 p-[5px] backface-hidden'>
+      <span className='absolute inset-0 rounded-[5px] border border-neutral-100/50 bg-violet-800 p-1.25 backface-hidden'>
         <img src={backFaceArt} alt='' className='h-full w-full' />
       </span>
       {/* The revealed face: the symbol's own logo, as the original's `.front-face` img was. */}
-      <span className='absolute inset-0 rounded-[5px] border border-neutral-100/50 bg-violet-800 p-[5px] backface-hidden rotate-y-180'>
+      <span className='absolute inset-0 rounded-[5px] border border-neutral-100/50 bg-violet-800 p-1.25 backface-hidden rotate-y-180'>
         <img src={face.logo} alt='' className='h-full w-full' />
       </span>
     </button>
