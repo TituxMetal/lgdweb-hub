@@ -52,7 +52,7 @@ names as the repository's stand-in for black and white.
 - `bg-orange-300` for the back face, which the original fills with the `#fcaf3e` artwork
   (`backFace.svg`).
 - `rotate-y-180` on the flipped card, `duration-500` for the 0.5s transform, `transform-3d`,
-  `backface-hidden` on both faces, `rotate-y-180` pre-applied to the front face, `active:scale-[0.97]`
+  `backface-hidden` on both faces, `rotate-y-180` pre-applied to the front face, `active:scale-97`
   for the pressed state, and `perspective-[1000px]` on the board (`_board.scss:13, :24-36, :38-52`).
 - `text-neutral-500` for the counter, the win line and the best-run labels: the shading grey the
   logos already carry, promoted to the feature's secondary text tone. The original's own body text

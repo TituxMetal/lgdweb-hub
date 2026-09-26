@@ -12,7 +12,7 @@ type MemoryBoardProps = {
  * 1000px perspective carrying the flip (`_board.scss:13`).
  */
 export const MemoryBoard = ({ cards, onFlip }: MemoryBoardProps) => (
-  <div className='grid h-[70vh] max-h-[500px] w-full max-w-[460px] grid-cols-4 grid-rows-3 gap-[10px] perspective-[1000px] min-[460px]:h-[90vh] min-[460px]:max-h-[700px] min-[460px]:max-w-[640px]'>
+  <div className='grid h-[70vh] max-h-125 w-full max-w-115 grid-cols-4 grid-rows-3 gap-2.5 perspective-[1000px] min-[460px]:h-[90vh] min-[460px]:max-h-175 min-[460px]:max-w-160'>
     {cards.map((card, position) => (
       <MemoryCard key={card.id} card={card} position={position} onFlip={onFlip} />
     ))}

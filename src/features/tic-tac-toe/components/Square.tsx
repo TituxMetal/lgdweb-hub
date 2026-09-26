@@ -19,7 +19,7 @@ export const Square = ({ position, mark, locked, onPlay }: SquareProps) => (
     aria-label={mark === null ? `Case ${position + 1}` : `Case ${position + 1} : ${mark}`}
     disabled={mark !== null || locked}
     onClick={() => onPlay(position)}
-    className='flex h-1/3 w-1/3 cursor-pointer items-center justify-center border-[5px] border-amber-400 bg-blue-400 text-[28px] leading-none text-neutral-900 disabled:cursor-default min-[460px]:text-[48px]'
+    className='flex h-1/3 w-1/3 cursor-pointer items-center justify-center border-5 border-amber-400 bg-blue-400 text-[28px] leading-none text-neutral-900 disabled:cursor-default min-[460px]:text-5xl'
   >
     {mark}
   </button>

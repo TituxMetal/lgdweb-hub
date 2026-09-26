@@ -33,10 +33,10 @@ renders.
   100vh: `.game` (`app.scss:28-35`).
 - `text-teal-600` on the `h1`, `text-[30px]` for its 3rem at the original's 62.5% root
   (`app.scss:5-7, :16-26`).
-- `border-fuchsia-700` on the board, `p-[10px]` for its 1rem padding, `w-[min(60vh,100%)]` and
+- `border-fuchsia-700` on the board, `p-2.5` for its 1rem padding, `w-[min(60vh,100%)]` and
   `aspect-square` for its 60vh square (`app.scss:37-44`); the width falls back to the viewport on a
   phone, where 60vh is wider than the screen.
-- `bg-blue-400` and `border-amber-400` on each of the nine cells, `text-[48px]` for their 4.8em
+- `bg-blue-400` and `border-amber-400` on each of the nine cells, `text-5xl` for their 4.8em
   marks, `text-neutral-900` for the black (`app.scss:46-55`).
 - `bg-neutral-950/90` and `text-neutral-50` on the round-end overlay, `text-[50px]` for its 5rem
   (`app.scss:59-72`). `neutral-950` is the entry nearest the overlay's black, so the plate darkens
