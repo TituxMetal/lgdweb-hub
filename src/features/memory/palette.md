@@ -48,23 +48,23 @@ names as the repository's stand-in for black and white.
 - `bg-neutral-800` and `text-neutral-100` on the feature plate: the `body` rules
   (`_board.scss:1-7`, colours from `_settings.scss:1-2`).
 - `bg-violet-800` on both faces and `border-neutral-100/50` for their 1px border, `rounded-[5px]`
-  and `p-[5px]` (`_board.scss:38-48`).
+  (`_board.scss:38-48`).
 - `bg-orange-300` for the back face, which the original fills with the `#fcaf3e` artwork
   (`backFace.svg`).
 - `rotate-y-180` on the flipped card, `duration-500` for the 0.5s transform, `transform-3d`,
   `backface-hidden` on both faces, `rotate-y-180` pre-applied to the front face, `active:scale-97`
   for the pressed state, and `perspective-[1000px]` on the board (`_board.scss:13, :24-36, :38-52`).
-- `text-neutral-500` for the counter, the win line and the best-run labels: the shading grey the
-  logos already carry, promoted to the feature's secondary text tone. The original's own body text
-  was `1.2rem` (`_board.scss:6`) and carries no visible string, so the new labels sit at
+- `text-neutral-500` for the best-run heading, the rank numbers and the empty slots: the shading
+  grey the logos already carry, promoted to the feature's secondary text tone. The original's own
+  body text was `1.2rem` (`_board.scss:6`) and carries no visible string, so the new labels sit at
   `text-[14px]`.
 - The win plate and the reset button introduce no colour: they reuse `bg-violet-800`,
   `bg-orange-300` and `text-neutral-800`.
 
 `orange-300`, `neutral-100` and `neutral-500` are entries computed for the card-back artwork, the
-face border and the logo shading respectively. The first also paints the reset button and the move
-counter's emphasis, and the second the counter's body text; that is those entries carrying more of
-the feature, not a new colour.
+face border and the logo shading respectively. The first also paints the reset button, the move
+counter's emphasis and the win line, and the second the counter's body text and the populated
+best-run values; that is those entries carrying more of the feature, not a new colour.
 
 ## The logos
 
