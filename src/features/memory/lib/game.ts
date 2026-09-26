@@ -32,7 +32,15 @@ export const flip = (state: GameState, id: number): GameState => {
   if (state.locked || state.status === 'won') return state
 
   const card = state.cards.find((entry) => entry.id === id)
-  if (card === undefined || card.status !== 'down') return state
+  if (card === undefined) return state
+
+  // The first card clicked again: the original clears its first-card slot and
+  // leaves the card face up (index.js:9), so the next card starts a new attempt
+  // instead of being scored as the second half of this one. Checked before the
+  // down-status guard, which the pending card no longer satisfies.
+  if (state.picks.length === 1 && state.picks[0] === id) return { ...state, picks: [] }
+
+  if (card.status !== 'down') return state
 
   const revealed = state.cards.map((entry) =>
     entry.id === id ? { ...entry, status: 'up' as const } : entry
