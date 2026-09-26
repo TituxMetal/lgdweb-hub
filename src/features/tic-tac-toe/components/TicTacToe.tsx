@@ -15,14 +15,14 @@ export const TicTacToe = () => {
     <section className='space-y-4'>
       <BackToList />
 
-      <div className='relative flex min-h-screen flex-col items-center justify-center gap-6 border-[5px] border-lime-300 bg-neutral-900 px-4 py-8 text-neutral-50'>
+      <div className='relative flex min-h-screen flex-col items-center justify-center gap-6 border-5 border-lime-300 bg-neutral-900 px-4 py-8 text-neutral-50'>
         <h1 className='text-center text-[30px] text-teal-600'>Tic Tac Toe by Titux</h1>
 
-        <p className='text-[16px] tabular-nums'>
+        <p className='text-base tabular-nums'>
           Au tour de {PLAYER_LABELS[player]} ({mark})
         </p>
 
-        <div className='flex aspect-square w-[min(60vh,100%)] flex-wrap justify-center border-[5px] border-fuchsia-700 p-[10px]'>
+        <div className='flex aspect-square w-[min(60vh,100%)] flex-wrap justify-center border-5 border-fuchsia-700 p-2.5'>
           {BOARD_POSITIONS.map((position) => (
             <Square
               key={position}
@@ -34,7 +34,7 @@ export const TicTacToe = () => {
           ))}
         </div>
 
-        <p className='text-[16px] tabular-nums'>
+        <p className='text-base tabular-nums'>
           {PLAYER_LABELS.playerOne} : {state.score.playerOne} · {PLAYER_LABELS.playerTwo} :{' '}
           {state.score.playerTwo}
         </p>

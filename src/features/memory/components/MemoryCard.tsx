@@ -40,7 +40,7 @@ export const MemoryCard = ({ card, position, onFlip }: MemoryCardProps) => {
       }
       disabled={faceUp}
       onClick={() => onFlip(card.id)}
-      className={`relative cursor-pointer transition-transform duration-500 transform-3d active:scale-[0.97] disabled:cursor-default ${faceUp ? 'rotate-y-180' : ''}`}
+      className={`relative cursor-pointer transition-transform duration-500 transform-3d active:scale-97 disabled:cursor-default ${faceUp ? 'rotate-y-180' : ''}`}
     >
       <span className='absolute inset-0 rounded-[5px] border border-neutral-100/50 bg-orange-300 backface-hidden' />
       <span
