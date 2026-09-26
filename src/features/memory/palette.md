@@ -48,9 +48,11 @@ names as the repository's stand-in for black and white.
 - `bg-neutral-800` and `text-neutral-100` on the feature plate: the `body` rules
   (`_board.scss:1-7`, colours from `_settings.scss:1-2`).
 - `bg-violet-800` on both faces and `border-neutral-100/50` for their 1px border, `rounded-[5px]`
-  (`_board.scss:38-48`).
-- `bg-orange-300` for the back face, which the original fills with the `#fcaf3e` artwork
-  (`backFace.svg`).
+  and `p-[5px]`, which is the original's `padding: 5px` on the same faces (`_board.scss:38-48`).
+- the card back renders the original's own `backFace.svg` — the `#fcaf3e` artwork — on the
+  `bg-violet-800` plate, inset by the same `p-[5px]` the original's faces carried
+  (`_board.scss:38-48`). `bg-orange-300` stays the feature's warm flat colour where one is needed:
+  the reset button and the win line's text.
 - `rotate-y-180` on the flipped card, `duration-500` for the 0.5s transform, `transform-3d`,
   `backface-hidden` on both faces, `rotate-y-180` pre-applied to the front face, `active:scale-97`
   for the pressed state, and `perspective-[1000px]` on the board (`_board.scss:13, :24-36, :38-52`).
@@ -61,18 +63,27 @@ names as the repository's stand-in for black and white.
 - The win plate and the reset button introduce no colour: they reuse `bg-violet-800`,
   `bg-orange-300` and `text-neutral-800`.
 
-`orange-300`, `neutral-100` and `neutral-500` are entries computed for the card-back artwork, the
-face border and the logo shading respectively. The first also paints the reset button, the move
-counter's emphasis and the win line, and the second the counter's body text and the populated
-best-run values; that is those entries carrying more of the feature, not a new colour.
+`orange-300` is the entry computed for the `#fcaf3e` card-back artwork; now that the artwork itself
+is copied in, it no longer paints the card, so it carries the feature's warm flat accents —
+`bg-orange-300` on the reset button, `text-orange-300` on the move counter's emphasis and on the
+win line. `neutral-100` and `neutral-500` are the entries computed for the face border and the logo
+shading; they carry the feature's own text tones — `text-neutral-100` on the populated best-run
+values and, inherited from the plate, the counter's body text.
 
 ## The logos
 
-The 2018 front faces are third-party logo SVGs. Nothing is copied from the archive: each symbol is
-rendered as a monogram in its logo's own mapped colour, on the `$cardBg` plate — `D` in `sky-600`,
-`G` in `red-500`, `H5` in `orange-600`, `JS` in `amber-300`, `S` in `pink-400`. Ansible reads in
-its logo's white (`neutral-50`): its near-black mark (`neutral-900`) would disappear on the plate.
-The `#666666` and `#888888` shading of every SVG maps to `neutral-500` and is not re-drawn.
+The 2018 faces are the original's own SVG artwork, copied byte for byte into
+`src/features/memory/assets/` — the six symbol logos for the revealed face, `backFace.svg` for the
+card back — and rendered the way the original rendered them: an `<img>` filling the face box, inset
+by the plate's `p-[5px]`, on the `bg-violet-800` plate, with the front face pre-rotated
+(`_board.scss:38-52`).
+
+An asset is content, not a class string, so each logo paints its own colours instead of a mapped
+entry: the table above records every one of them with the Tailwind entry nearest to it, which is
+reference here rather than substitution. Every canvas is 0.707 (A4) portrait and the face box is
+`calc(25% - 10px)` by `calc(33.333% - 10px)` (`_board.scss:22-27`), so the box stretches each logo
+by about the same five percent the original did — the original set no `object-fit`, and neither
+does the port.
 
 ## Fonts
 
