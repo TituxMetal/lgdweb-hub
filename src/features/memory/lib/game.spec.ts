@@ -75,11 +75,25 @@ describe('flip', () => {
     expect(flip(locked, idOf(state, 'git'))).toBe(locked)
   })
 
-  it('ignores a second click on the same, already revealed card', () => {
+  it('clears the pending first pick on a second click on the same card', () => {
     const state = createGameState()
     const first = flip(state, idOf(state, 'ansible'))
+    const repeated = flip(first, idOf(state, 'ansible'))
 
-    expect(flip(first, idOf(state, 'ansible'))).toBe(first)
+    expect(repeated.picks).toEqual([])
+    expect(repeated.moves).toBe(0)
+    expect(repeated.locked).toBe(false)
+    expect(repeated.cards.find((card) => card.symbol === 'ansible')?.status).toBe('up')
+  })
+
+  it('starts a fresh attempt after that repeat click revealed nothing else', () => {
+    const state = createGameState()
+    const repeated = flip(flip(state, idOf(state, 'ansible')), idOf(state, 'ansible'))
+    const next = flip(repeated, idOf(state, 'docker'))
+
+    expect(next.picks).toEqual([idOf(state, 'docker')])
+    expect(next.moves).toBe(0)
+    expect(next.locked).toBe(false)
   })
 
   it('ignores a click on an already matched card', () => {
