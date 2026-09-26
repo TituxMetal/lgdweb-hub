@@ -6,6 +6,10 @@ import { Home } from '~/features/home'
 import { type RouteDefinition, RouterView } from '~/lib/router'
 
 const Snake = lazy(() => import('~/features/snake').then((m) => ({ default: m.Snake })))
+const TicTacToe = lazy(() =>
+  import('~/features/tic-tac-toe').then((m) => ({ default: m.TicTacToe }))
+)
+const Memory = lazy(() => import('~/features/memory').then((m) => ({ default: m.Memory })))
 
 const ProjectPlaceholder = ({ slug }: { slug: string }) => {
   const project = projects.find((entry) => entry.slug === slug)
@@ -31,6 +35,8 @@ const ProjectPlaceholder = ({ slug }: { slug: string }) => {
 
 const renderProject = (slug: string) => {
   if (slug === 'snake') return <Snake />
+  if (slug === 'tic-tac-toe') return <TicTacToe />
+  if (slug === 'memory') return <Memory />
   return <ProjectPlaceholder slug={slug} />
 }
 
