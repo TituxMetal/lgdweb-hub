@@ -10,6 +10,7 @@ const TicTacToe = lazy(() =>
   import('~/features/tic-tac-toe').then((m) => ({ default: m.TicTacToe }))
 )
 const Memory = lazy(() => import('~/features/memory').then((m) => ({ default: m.Memory })))
+const Portfolio = lazy(() => import('~/features/portfolio').then((m) => ({ default: m.Portfolio })))
 
 const ProjectPlaceholder = ({ slug }: { slug: string }) => {
   const project = projects.find((entry) => entry.slug === slug)
@@ -37,6 +38,7 @@ const renderProject = (slug: string) => {
   if (slug === 'snake') return <Snake />
   if (slug === 'tic-tac-toe') return <TicTacToe />
   if (slug === 'memory') return <Memory />
+  if (slug === 'portfolio') return <Portfolio />
   return <ProjectPlaceholder slug={slug} />
 }
 
