@@ -48,9 +48,9 @@ names as the repository's stand-in for black and white.
 - `bg-neutral-800` and `text-neutral-100` on the feature plate: the `body` rules
   (`_board.scss:1-7`, colours from `_settings.scss:1-2`).
 - `bg-violet-800` on both faces and `border-neutral-100/50` for their 1px border, `rounded-[5px]`
-  and `p-[5px]`, which is the original's `padding: 5px` on the same faces (`_board.scss:38-48`).
+  and `p-1.25`, which is the original's `padding: 5px` on the same faces (`_board.scss:38-48`).
 - the card back renders the original's own `backFace.svg` — the `#fcaf3e` artwork — on the
-  `bg-violet-800` plate, inset by the same `p-[5px]` the original's faces carried
+  `bg-violet-800` plate, inset by the same `p-1.25` the original's faces carried
   (`_board.scss:38-48`). `bg-orange-300` stays the feature's warm flat colour where one is needed:
   the reset button and the win line's text.
 - `rotate-y-180` on the flipped card, `duration-500` for the 0.5s transform, `transform-3d`,
@@ -75,7 +75,7 @@ values and, inherited from the plate, the counter's body text.
 The 2018 faces are the original's own SVG artwork, copied byte for byte into
 `src/features/memory/assets/` — the six symbol logos for the revealed face, `backFace.svg` for the
 card back — and rendered the way the original rendered them: an `<img>` filling the face box, inset
-by the plate's `p-[5px]`, on the `bg-violet-800` plate, with the front face pre-rotated
+by the plate's `p-1.25`, on the `bg-violet-800` plate, with the front face pre-rotated
 (`_board.scss:38-52`).
 
 An asset is content, not a class string, so each logo paints its own colours instead of a mapped
