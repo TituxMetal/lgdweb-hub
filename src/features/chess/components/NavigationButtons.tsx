@@ -25,7 +25,7 @@ export const NavigationButtons = ({ previous, nextEnabled, onNext }: NavigationB
   const back = previous === null ? CHESS_BRANCH : chapterPath(previous.storyId, previous.chapterId)
 
   return (
-    <div className='mt-10 flex items-center justify-between gap-3'>
+    <div className='mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
       <Link to={back} className={buttonClass('neutral')}>
         ← {previous === null ? 'Accueil' : 'Précédent'}
       </Link>

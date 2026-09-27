@@ -97,7 +97,7 @@ export const MoveQuestion = ({ question, position, onAnswer }: MoveQuestionProps
           Ou saisissez le coup en notation algébrique :
         </label>
 
-        <div className='flex gap-2'>
+        <div className='flex flex-col gap-2 sm:flex-row'>
           <input
             id='chess-move'
             type='text'
