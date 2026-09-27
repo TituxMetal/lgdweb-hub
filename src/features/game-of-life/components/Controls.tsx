@@ -72,26 +72,31 @@ export const Controls = ({
       Mode tore
     </button>
 
-    <label className='flex items-center gap-2 text-orange-100'>
-      Motif
-      <select
-        value={patternId}
-        onChange={(event) => onPatternChange(event.target.value)}
-        className={SELECT}
-      >
-        {PATTERNS.map((pattern) => (
-          <option key={pattern.id} value={pattern.id}>
-            {pattern.label}
-          </option>
-        ))}
-      </select>
+    {/* The label names the select alone: a label owns a single labelable
+        descendant, and the stamp button is one too. The row stays a group, so
+        the button and the note are its siblings rather than its contents. */}
+    <div className='flex items-center gap-2 text-orange-100'>
+      <label className='flex items-center gap-2'>
+        Motif
+        <select
+          value={patternId}
+          onChange={(event) => onPatternChange(event.target.value)}
+          className={SELECT}
+        >
+          {PATTERNS.map((pattern) => (
+            <option key={pattern.id} value={pattern.id}>
+              {pattern.label}
+            </option>
+          ))}
+        </select>
+      </label>
       <button type='button' onClick={onStamp} className={BUTTON}>
         Poser
       </button>
       <span className='max-w-56 text-xs text-orange-100/70'>
         {PATTERNS.find((pattern) => pattern.id === patternId)?.note}
       </span>
-    </label>
+    </div>
 
     <label className='flex items-center gap-2 text-orange-100'>
       Vitesse
