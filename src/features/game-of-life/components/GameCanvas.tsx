@@ -81,7 +81,26 @@ export const GameCanvas = ({ grid, size, onPaint }: GameCanvasProps) => {
     const observer = new ResizeObserver(paint)
     observer.observe(canvas)
 
-    return () => observer.disconnect()
+    // The box is not the whole story: it keeps its CSS width when the window moves
+    // to a display of another density or the page zooms, while the device pixels
+    // behind it change, and the observer sees no box change then. The ratio gets
+    // its own watcher, a query that names the ratio it was built from and fires
+    // only on the change away from it — so the handler re-arms the next one.
+    let ratio = window.matchMedia(`(resolution: ${devicePixelRatio}dppx)`)
+
+    const onRatioChange = () => {
+      paint()
+      ratio.removeEventListener('change', onRatioChange)
+      ratio = window.matchMedia(`(resolution: ${devicePixelRatio}dppx)`)
+      ratio.addEventListener('change', onRatioChange)
+    }
+
+    ratio.addEventListener('change', onRatioChange)
+
+    return () => {
+      observer.disconnect()
+      ratio.removeEventListener('change', onRatioChange)
+    }
   }, [grid, size, cursor, focused])
 
   const cellAt = (event: PointerEvent<HTMLCanvasElement>): Cursor | null => {
