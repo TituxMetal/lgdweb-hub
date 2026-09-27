@@ -25,7 +25,8 @@ const PROJECT_FEATURES: Readonly<Record<string, LazyExoticComponent<ComponentTyp
   ),
   'game-of-life': lazy(() =>
     import('~/features/game-of-life').then((module) => ({ default: module.GameOfLife }))
-  )
+  ),
+  chess: lazy(() => import('~/features/chess').then((module) => ({ default: module.Chess })))
 }
 
 /** The slugs the showroom renders itself, for the manifest's membership invariant. */
