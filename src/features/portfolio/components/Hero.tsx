@@ -12,13 +12,13 @@ export const Hero = () => (
     style={{ backgroundImage: `url(${heroBackground})` }}
   >
     <div className='w-full'>
-      <h1 className='text-center text-[35px] font-black text-orange-500 sm:text-[50px]'>
+      <h1 className='text-center text-[28px] font-black text-orange-500 sm:text-[40px]'>
         Guillaume LANG
       </h1>
-      <p className='py-2.5 text-center text-[22px] font-black text-neutral-50 sm:text-[30px]'>
+      <p className='py-2.5 text-center text-lg leading-normal font-black text-neutral-50 sm:text-2xl'>
         Développeur / Intégrateur Web
       </p>
-      <p className='py-2.5 text-center text-[22px] font-black text-neutral-50 sm:text-[30px]'>
+      <p className='py-2.5 text-center text-lg leading-normal font-black text-neutral-50 sm:text-2xl'>
         Administrateur Système Linux
       </p>
     </div>

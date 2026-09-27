@@ -15,7 +15,7 @@ type FieldName = (typeof FIELDS)[number]['name']
 type FieldValues = Partial<Record<FieldName, string>>
 
 const FIELD_CLASS =
-  'relative block w-full bg-transparent p-0 text-[16px] leading-[1.5] text-neutral-50 outline-none'
+  'relative block w-full bg-transparent p-0 text-base leading-normal text-neutral-50 outline-none'
 
 /**
  * `#contact` — the original's form, layout included, and nothing behind it.
@@ -36,8 +36,8 @@ export const ContactSection = () => {
       className='flex scroll-mt-16 bg-cover bg-center bg-fixed bg-no-repeat md:scroll-mt-20'
       style={{ backgroundImage: `url(${contactBackground})` }}
     >
-      <article className='mx-auto my-[60px] w-full max-w-[90%] bg-neutral-800/80 p-[2em_1em] md:max-w-[80%] lg:max-w-[60%]'>
-        <h2 className='px-[10vmin] text-[30px] font-bold text-orange-500'>Contactez-moi</h2>
+      <article className='mx-auto my-12 w-full max-w-[90%] bg-neutral-800/80 p-[2em_1em] md:max-w-[80%] lg:max-w-[60%]'>
+        <h2 className='px-8 leading-normal text-2xl font-bold text-orange-500'>Contactez-moi</h2>
 
         <form onSubmit={(event) => event.preventDefault()}>
           {FIELDS.map((field) => {
@@ -60,11 +60,11 @@ export const ContactSection = () => {
             return (
               <div
                 key={field.name}
-                className={`relative pt-[1em] pb-[0.5em] transition-[height] duration-300 ${expanded ? 'h-[200px]' : 'h-[72px]'}`}
+                className={`relative pt-[1em] pb-[0.5em] transition-[height] duration-300 ${expanded ? 'h-50' : 'h-18'}`}
               >
                 <label
                   htmlFor={field.name}
-                  className={`relative block origin-left text-[16px] leading-none transition-transform duration-300 ${floated ? 'translate-y-0 scale-75' : 'translate-y-[24px]'} ${focusedHere ? 'text-orange-400' : 'text-neutral-300'}`}
+                  className={`relative block origin-left text-base leading-none transition-transform duration-300 ${floated ? 'translate-y-0 scale-75' : 'translate-y-6'} ${focusedHere ? 'text-orange-400' : 'text-neutral-300'}`}
                 >
                   {field.label}
                 </label>
@@ -72,19 +72,19 @@ export const ContactSection = () => {
                 {multiline ? (
                   <textarea
                     {...fieldProps}
-                    className={`${FIELD_CLASS} ${expanded ? 'h-[158px] overflow-auto' : 'h-[32px] resize-none overflow-hidden'}`}
+                    className={`${FIELD_CLASS} ${expanded ? 'h-39.5 overflow-auto' : 'h-8 resize-none overflow-hidden'}`}
                   />
                 ) : (
-                  <input {...fieldProps} type={field.type} className={`${FIELD_CLASS} h-[32px]`} />
+                  <input {...fieldProps} type={field.type} className={`${FIELD_CLASS} h-8`} />
                 )}
 
                 <span
                   aria-hidden='true'
-                  className='absolute bottom-[6px] left-0 block h-0.5 w-full bg-neutral-50'
+                  className='absolute bottom-1.5 left-0 block h-0.5 w-full bg-neutral-50'
                 />
                 <span
                   aria-hidden='true'
-                  className={`absolute bottom-[6px] left-0 block h-0.5 w-full origin-left bg-orange-400 transition-transform duration-300 ${focusedHere ? 'scale-x-100' : 'scale-x-0'}`}
+                  className={`absolute bottom-1.5 left-0 block h-0.5 w-full origin-left bg-orange-400 transition-transform duration-300 ${focusedHere ? 'scale-x-100' : 'scale-x-0'}`}
                 />
               </div>
             )
@@ -95,14 +95,14 @@ export const ContactSection = () => {
               type='submit'
               value='send'
               title='Envoyez un message à Guillaume LANG'
-              className='mx-auto block w-auto min-w-[10%] cursor-pointer border-2 border-orange-500 bg-transparent px-[30px] py-[20px] text-[16px] font-bold tracking-[2px] text-neutral-50 uppercase transition-[background-color,border-color,color,min-width] duration-200 hover:min-w-full hover:border-orange-400 hover:text-orange-400'
+              className='mx-auto block w-auto min-w-[10%] cursor-pointer border-2 border-orange-500 bg-transparent px-7.5 py-5 text-base font-bold tracking-[2px] text-neutral-50 uppercase transition-[background-color,border-color,color,min-width] duration-200 hover:min-w-full hover:border-orange-400 hover:text-orange-400'
             >
               Envoyer
             </button>
           </div>
         </form>
 
-        <p className='mx-auto max-w-[80%] text-center text-[14px] text-neutral-300'>
+        <p className='mx-auto max-w-[80%] text-center text-base text-neutral-300'>
           Reconstitution du portfolio de 2021 : ce formulaire n'envoie rien et n'ouvre aucune boîte
           de réception.
         </p>

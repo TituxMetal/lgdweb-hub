@@ -52,10 +52,10 @@ const TECH = [
  * own logo files (`_skills.scss`).
  */
 export const SkillsSection = () => (
-  <section id='skills' className='scroll-mt-16 bg-neutral-900 py-[5vmin] md:scroll-mt-20'>
-    <article className='mx-auto my-[60px] max-w-[90%]'>
-      <h2 className='px-[10vmin] text-[30px] font-bold text-orange-500'>Compétences</h2>
-      <ul className='mx-auto my-2.5 flex flex-wrap justify-around text-[16px] leading-[32px] tracking-[1px]'>
+  <section id='skills' className='scroll-mt-16 bg-neutral-900 py-9 md:scroll-mt-20'>
+    <article className='mx-auto my-12 max-w-[90%]'>
+      <h2 className='px-8 leading-normal text-2xl font-bold text-orange-500'>Compétences</h2>
+      <ul className='mx-auto my-2.5 flex flex-wrap justify-around text-base leading-8 tracking-[1px]'>
         {KNOWLEDGE.map((item) => (
           <li key={item} className='mt-5 rounded-[3px] bg-neutral-800 p-2 sm:m-2.5'>
             {item}
@@ -64,9 +64,9 @@ export const SkillsSection = () => (
       </ul>
     </article>
 
-    <article className='mx-auto my-[60px] max-w-[90%]'>
-      <h2 className='px-[10vmin] text-[30px] font-bold text-orange-500'>Technologies</h2>
-      <ul className='mx-auto my-2.5 flex flex-wrap justify-around text-[16px]'>
+    <article className='mx-auto my-12 max-w-[90%]'>
+      <h2 className='px-8 leading-normal text-2xl font-bold text-orange-500'>Technologies</h2>
+      <ul className='mx-auto my-2.5 flex flex-wrap justify-around text-base'>
         {TECH.map(({ label, logo }) => (
           <li key={label} className='mx-auto my-2.5 w-1/3 sm:m-3 sm:w-1/5 md:w-auto'>
             <figure className='mx-auto w-[90%] rounded-[3px] bg-neutral-800 py-2.5 sm:w-auto sm:pt-5 md:p-5'>
@@ -75,7 +75,7 @@ export const SkillsSection = () => (
                 alt={label}
                 loading='lazy'
                 decoding='async'
-                className='mx-auto w-full max-w-[80px] sm:max-w-[100px] md:max-w-[115px] lg:max-w-[140px]'
+                className='mx-auto w-full max-w-20 sm:max-w-25 md:max-w-[115px] lg:max-w-35'
               />
               <figcaption className='pt-2.5 text-center'>{label}</figcaption>
             </figure>

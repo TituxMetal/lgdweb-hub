@@ -1,4 +1,5 @@
-import type { Project } from '~/data/projects'
+import { type Project, projectPath } from '~/data/projects'
+import { EXTERNAL_LINK_PROPS } from '~/lib/links'
 import { Link } from '~/lib/router'
 import { ExternalArrow } from './ExternalArrow'
 
@@ -54,8 +55,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
     return (
       <a
         href={external}
-        target='_blank'
-        rel='noopener noreferrer'
+        {...EXTERNAL_LINK_PROPS}
         aria-label={`${project.title} (ouvre un nouvel onglet)`}
         className='block'
       >
@@ -65,7 +65,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   }
 
   return (
-    <Link to={`/projects/${project.slug}`} className='block'>
+    <Link to={projectPath(project.slug)} className='block'>
       <CardBody project={project} />
     </Link>
   )

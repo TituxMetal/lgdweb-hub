@@ -3,8 +3,8 @@
  * one render. Patterns use `:name` segments to capture params.
  *
  * Public API: `navigate`, `<Link>`, `useCurrentPath`, `useRouteParams`,
- * `<RouterView>`. `matchRoute` and `createRouter` are exported for tests and
- * non-browser callers.
+ * `isPlainLeftClick`, `<RouterView>`. `matchRoute` and `createRouter` are exported
+ * for tests and non-browser callers.
  */
 import { type MouseEvent, type ReactNode, useSyncExternalStore } from 'react'
 
@@ -71,7 +71,17 @@ export const createRouter = (adapters: RouterAdapters): Router => {
 }
 
 const browserRouter = createRouter({
-  pushState: (url) => window.history.pushState(null, '', url),
+  pushState: (url) => {
+    // A pushed route keeps the offset of the page the visitor was on, and the browser
+    // then clamps it to the end of a shorter page — enough for a link followed from
+    // 2000px down to open the next project at its bottom. The offset is reset only
+    // when the path changes: a hash-only push (`navigate('#projects')`) must leave the
+    // viewport where the feature's own `scrollIntoView` put it.
+    const pathChanged = new URL(url, window.location.href).pathname !== window.location.pathname
+
+    window.history.pushState(null, '', url)
+    if (pathChanged) window.scrollTo(0, 0)
+  },
   getPath: () => window.location.pathname
 })
 
@@ -106,6 +116,7 @@ type LinkProps = {
   to: string
   children: ReactNode
   className?: string
+  title?: string
 }
 
 /**
@@ -124,7 +135,7 @@ export const isPlainLeftClick = (event: MouseEvent<HTMLAnchorElement>): boolean 
 
 /** Anchor that intercepts plain left-clicks to call `navigate(to)` instead of a
  * full reload. */
-export const Link = ({ to, children, className }: LinkProps) => {
+export const Link = ({ to, children, className, title }: LinkProps) => {
   const onClick = (event: MouseEvent<HTMLAnchorElement>): void => {
     if (!isPlainLeftClick(event)) return
 
@@ -133,7 +144,7 @@ export const Link = ({ to, children, className }: LinkProps) => {
   }
 
   return (
-    <a href={to} onClick={onClick} className={className}>
+    <a href={to} onClick={onClick} className={className} title={title}>
       {children}
     </a>
   )

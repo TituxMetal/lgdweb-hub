@@ -1,16 +1,9 @@
-import { lazy } from 'react'
 import { BackToList } from '~/components/BackToList'
 import { Layout } from '~/components/Layout'
-import { projects } from '~/data/projects'
+import { PROJECT_ROUTE_PATTERN, projects } from '~/data/projects'
 import { Home } from '~/features/home'
+import { projectFeature } from '~/features/registry'
 import { type RouteDefinition, RouterView } from '~/lib/router'
-
-const Snake = lazy(() => import('~/features/snake').then((m) => ({ default: m.Snake })))
-const TicTacToe = lazy(() =>
-  import('~/features/tic-tac-toe').then((m) => ({ default: m.TicTacToe }))
-)
-const Memory = lazy(() => import('~/features/memory').then((m) => ({ default: m.Memory })))
-const Portfolio = lazy(() => import('~/features/portfolio').then((m) => ({ default: m.Portfolio })))
 
 const ProjectPlaceholder = ({ slug }: { slug: string }) => {
   const project = projects.find((entry) => entry.slug === slug)
@@ -35,10 +28,10 @@ const ProjectPlaceholder = ({ slug }: { slug: string }) => {
 }
 
 const renderProject = (slug: string) => {
-  if (slug === 'snake') return <Snake />
-  if (slug === 'tic-tac-toe') return <TicTacToe />
-  if (slug === 'memory') return <Memory />
-  if (slug === 'portfolio') return <Portfolio />
+  const Feature = projectFeature(slug)
+
+  if (Feature !== undefined) return <Feature />
+
   return <ProjectPlaceholder slug={slug} />
 }
 
@@ -52,7 +45,7 @@ const NotFound = () => (
 const routes: RouteDefinition[] = [
   { pattern: '/', render: () => <Home /> },
   {
-    pattern: '/projects/:slug',
+    pattern: PROJECT_ROUTE_PATTERN,
     render: (params) => renderProject(params.slug ?? '')
   }
 ]

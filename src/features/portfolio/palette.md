@@ -91,17 +91,57 @@ the thumbnails keep the circular crop (`_projects.scss:113-124`).
 The original fetched `Courgette` for the hero's name and `Nunito` for everything else from Google
 Fonts at runtime (`app.scss:2`, `_common.scss:14`, `_head.scss:31`). This project ships its own pair
 (Geist Sans / Geist Mono) and forbids global CSS beyond the reset, so the port keeps the era's
-colours, sizes and layout and renders in `font-sans`. Nothing is fetched at runtime; the hero's
-identity stays its orange, its weight and its centring.
+colours, its hierarchy and its layout — at the column's scale, not the canvas's, below — and renders
+in `font-sans`. Nothing is fetched at runtime; the hero's identity stays its orange, its weight and
+its centring.
 
 ## Where the port departs from the original
 
 - **The shell owns the page.** The feature renders inside the shell's column instead of bleeding to
   the viewport edges. Viewport-relative widths the original used for its own full-page canvas —
-  the technology logos' `20vw`…`11vw`, the profile articles' `45vw`/`30vw`, the project blocks'
-  `45vw`, the contact plate's `65vmax`/`50vmax`, the articles' `90vw` — become container-relative
-  (`w-1/3`, `w-[45%]`, `max-w-[80%]`, `max-w-[90%]`), which is what keeps them from overflowing a
-  column narrower than the viewport. The hero keeps its full viewport height.
+  the technology logos' `20vw`…`11vw`, the profile articles' `45vw`, the project blocks' `45vw`, the
+  contact plate's `65vmax`/`50vmax`, the articles' `90vw` — become container-relative (`w-1/3`,
+  `w-[45%]`, `max-w-[80%]`, `max-w-[90%]`), which is what keeps them from overflowing a column
+  narrower than the viewport.
+- **The page's scale is re-derived for the column, never copied from a canvas that was the
+  viewport.** The original measured against the whole screen; inside a column those values mean
+  something else — at 1440×900 the `h2`'s `10vmin` padding alone took 23% of the column, and the
+  profile articles fell from ~420px to 230px. Every viewport unit became the fixed value it stood
+  for, and the type scale stepped down by the column-to-canvas ratio (0.8, the shell's 768px column
+  against the original's ~980px desktop canvas), with running text floored at 16px:
+
+  | Original | Port | Why |
+  | --- | --- | --- |
+  | `h2` `padding: 0 10vmin` | `px-8` | the indent was 23% of the column; the title keeps an indent, the text keeps its room |
+  | section blocks `padding: 5vmin 0` | `py-9` | 45px at the desktop reference, stepped down |
+  | slant plates `height: 4vw` / `bottom: ±2vw` | `h-10` / `translate-y-5` | a fixed plate whose half-height is its own offset, so the two plates keep meeting |
+  | the phone menu's `margin: 4vw` | `top-4 right-4` | 4vw is what the button took on the phone, where it is visible |
+  | the menu overlay's `100vh`/`100vw` | `h-auto w-auto` | the browser already lays a modal `<dialog>` out fixed and inset; the port only neutralises the intrinsic size and the margins the UA gives it, and no viewport unit is left |
+  | `h2` `3rem` (30px) | `text-2xl leading-normal` | 0.8 |
+  | `p` `2rem` (20px) | `text-base` | 0.8, and the shell's floor for running text |
+  | the card title `1.5em` (24px) | `text-[19px]` | 0.8; keeping 24 would have flattened it against the section titles, and 19px is the one size the default scale has no entry for |
+  | the card links `1.2em` (19px) | `text-base` | 0.8, floored |
+  | the menu items `1.8rem` (18px) | `text-base` | 0.8, floored |
+  | the hero's `3.5rem`/`5rem` and `2.2rem`/`3rem` | `text-[28px]`/`sm:text-[40px]` and `text-lg`/`sm:text-2xl`, each `leading-normal` | 0.8, the hierarchy untouched |
+  | the card title's `padding: 1rem 6rem` | `sm:px-12` | 60px stepped down, so the title keeps its room in a 45% card |
+
+  Every other length is written with the canonical utility rather than a bespoke value — `min-h-144`
+  for the pomodoro plate, `max-w-20`/`max-w-25`/`max-w-35` for the technology logos, `leading-8`,
+  `size-12.5`, `px-7.5`, `h-39.5`, `bottom-1.5`, `border-r-3` — and the two type steps that carry a
+  leading of their own (`text-lg`, `text-2xl`) say `leading-normal` to keep the original's
+  inherited 1.5, which is what those classes would otherwise tighten. Only the values the default
+  scale has no entry for stay bespoke: `19px`, `28px`, `40px`, a `115px` logo,
+  `rounded-[3px]`, `leading-[1.4]`/`leading-[1.8]`, `tracking-[1px]`, the `em` paddings the original
+  measured in `em`, and the percentage widths above.
+
+  The profile articles keep the `md:45%` they were designed for and drop the `lg:30%` step, which
+  was a full-page proportion that left them 230px wide here. **One viewport unit survives, on
+  purpose:** the hero's own height, `h-screen`. It is a height and not spacing, it is what makes the
+  original's header read as a full-screen introduction rather than a banner, and it does not depend
+  on the column's width, so it cannot overflow the way the copied *spacing* did.
+
+  The footer's credit band keeps the original's `0.8em`: it is a credit line, not running text, and
+  its proportion is part of the original's footer.
 - **A viewport-relative breakpoint.** The original's two-layout split sits at `50em`
   (`_menu.scss:154`) and its type steps at `40em` (`_head.scss:45`); the port uses Tailwind's `md`
   (768px) and `sm` (640px), the nearest defaults, so a breakpoint names a palette entry too.
@@ -118,8 +158,8 @@ identity stays its orange, its weight and its centring.
 
 ## Additions beyond the original
 
-Three behaviours do not exist in the 2021 original — they are the issue's requirements, so no
-original colour constrains them:
+Behaviours and links that do not exist in the 2021 original — they are the issue's requirements, so
+no original colour constrains them:
 
 - **The active-section mark.** The original's menu had no notion of where the reader was; the port
   marks it with the entry already computed for its links (`orange-400`) and `aria-current`.
@@ -129,3 +169,12 @@ original colour constrains them:
 - **The note under the contact button.** The original's 2021 rewrite only animated its form and
   registered no submit handler, so nothing was ever delivered — but it never said so. The port says
   it, in `neutral-300`, the label tone the form already uses.
+- **The footer's captures of this portfolio** (`SiteFooter.tsx`): the original carried no link to
+  itself. The version this page ports and the first version are now one line in the credit band,
+  both at `archive.org`, so the page the visitor is reading can be compared with its ancestors.
+- **Four retargeted links** (`ProjectsSection.tsx`): the original pointed at `tenchido.fr`,
+  `albin.tuxlab.fr`, `tuxtactoe.tuxlab.fr` and `pomodoro.tuxlab.fr`. The first is served by someone
+  else today and the other three answer nothing, so each now reaches the author's own version — an
+  archived capture — except where the showroom has already ported the project, where the card links
+  into the showroom itself (`/projects/tic-tac-toe`, `/projects/pomodoro`). Those two are the
+  feature's only in-site links, and they wear no `target`: they navigate in the shell.

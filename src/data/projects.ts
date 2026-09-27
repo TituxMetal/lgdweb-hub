@@ -24,6 +24,16 @@ export type RecentProject = ProjectBase & {
 
 export type Project = OldProject | RecentProject
 
+/**
+ * The one place the project URL shape lives, so the list, the cards, the route
+ * and the invariant spec can never disagree about it.
+ */
+const PROJECTS_PREFIX = '/projects'
+
+export const PROJECT_ROUTE_PATTERN = `${PROJECTS_PREFIX}/:slug`
+
+export const projectPath = (slug: string): string => `${PROJECTS_PREFIX}/${slug}`
+
 export const projects: Project[] = [
   {
     kind: 'recent',
@@ -92,6 +102,15 @@ export const projects: Project[] = [
     description: `Implémentation web du Tetris original avec un mode 1 contre 1. Les pièces tombent, se posent, les lignes pleines disparaissent — et en duel, l'écran se sépare pour afficher la partie de l'adversaire en simultané.`,
     tech: ['TypeScript', 'React', 'Tailwind', 'Canvas', 'WebSocket'],
     repoUrl: 'https://github.com/TituxMetal/tetrisGame'
+  },
+  {
+    kind: 'old',
+    slug: 'pomodoro',
+    title: 'Pomodoro Timer',
+    date: '2018-05',
+    description: `Minuteur pomodoro de 2018 : quatre durées prêtes — 5, 15, 25 et 55 minutes — et un champ libre pour les autres. Le décompte s'écrit aussi dans le titre de l'onglet et annonce l'heure de fin. Ni pause ni remise à zéro : l'original n'en avait pas, le port non plus.`,
+    tech: ['TypeScript', 'React', 'Tailwind'],
+    repoUrl: 'https://github.com/TituxMetal/pomodoroTimer'
   },
   {
     kind: 'old',
