@@ -19,9 +19,9 @@ type ChoiceQuestionProps = {
 /**
  * A multiple-choice question, as the original's live path rendered it
  * (`QuestionComponent.tsx:48-139`): a card of choices, immediate feedback on the one
- * picked, the explanation once it is right, and a retry while it is not. The arrow
- * keys and Enter reach the same choices — the keyboard the original had written in
- * the component beside this one (`MultipleChoice.tsx:60-78`) but never wired to the
+ * picked, the chapter's explanation either way, and a retry while it is wrong. The
+ * arrow keys and Enter reach the same choices — the keyboard the original had written
+ * in the component beside this one (`MultipleChoice.tsx:60-78`) but never wired to the
  * question it actually showed.
  *
  * A choice is not one of the era's buttons: the original declared its own plate and
@@ -153,9 +153,15 @@ export const ChoiceQuestion = ({ question, onAnswer }: ChoiceQuestionProps) => {
               </Button>
             )}
           </div>
-          {correct && (
-            <p className='mt-2 text-base leading-relaxed text-zinc-300'>{question.explanation}</p>
+          {/* as in the move question: the explanation does not wait for a right answer,
+              because "incorrect" on its own is what leaves a reader guessing */}
+          {!correct && (
+            <p className='mt-3 text-base font-medium text-zinc-300'>
+              Ce que le chapitre enseigne :
+            </p>
           )}
+
+          <p className='mt-2 text-base leading-relaxed text-zinc-300'>{question.explanation}</p>
         </div>
       )}
     </div>

@@ -58,7 +58,7 @@ type ChapterProps = {
 
 const Chapter = ({ story, chapter, onComplete }: ChapterProps) => {
   const content = useChapterContent(story.id, chapter.id)
-  const [answered, setAnswered] = useState(false)
+  const [solved, setSolved] = useState(false)
 
   const position = chapterPosition(story, chapter.id)
   const next = nextChapter(CHESS_STORIES, story.id, chapter.id)
@@ -69,19 +69,22 @@ const Chapter = ({ story, chapter, onComplete }: ChapterProps) => {
   // chapters that only tell a story, and the index spec pins that split.
   const showsPosition = chapter.chessPosition !== undefined
 
-  // The original marked a chapter complete as soon as its question was answered
-  // right, and again when the visitor walked past it. The set both write into leaves
-  // an already-complete chapter alone, so the two cannot double-count.
+  // The original marked a chapter complete as soon as its question was answered right,
+  // and again when the visitor walked past it, right or wrong. The port asks for the
+  // right answer: a wrong move is told what the chapter teaches and can be retried, but
+  // it never opens the step on. The set both write into leaves an already-complete
+  // chapter alone, so the two cannot double-count.
   const handleAnswer = (correct: boolean): void => {
-    setAnswered(true)
+    if (!correct) return
 
-    if (correct) onComplete(story.id, chapter.id)
+    setSolved(true)
+    onComplete(story.id, chapter.id)
   }
 
   // The last chapter of a story hands over to its completion screen, as it did in
   // the original; anything else steps to the chapter after it.
   const goNext = (): void => {
-    if (chapter.question === undefined || answered) onComplete(story.id, chapter.id)
+    if (chapter.question === undefined || solved) onComplete(story.id, chapter.id)
 
     if (next === null || next.storyId !== story.id) {
       navigate(completionPath(story.id))
@@ -136,7 +139,7 @@ const Chapter = ({ story, chapter, onComplete }: ChapterProps) => {
 
       <NavigationButtons
         previous={previous}
-        nextEnabled={chapter.question === undefined || answered}
+        nextEnabled={chapter.question === undefined || solved}
         onNext={goNext}
       />
     </>

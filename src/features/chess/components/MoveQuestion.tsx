@@ -8,8 +8,9 @@ type MoveQuestionProps = {
   question: ChessQuestion
   /** The position the question is played from, resolved. */
   position: string
-  /** Called with every move a visitor plays, right or wrong, as the original did:
-   *  a wrong move still lets the chapter be left behind. */
+  /** Called with every move a visitor plays, right or wrong, as the original did. A
+   *  wrong move is answered with the chapter's own explanation and a retry, but the
+   *  caller keeps the step on closed until the move is right. */
   onAnswer: (correct: boolean) => void
 }
 
@@ -139,7 +140,16 @@ export const MoveQuestion = ({ question, position, onAnswer }: MoveQuestionProps
 
           <p className='text-sm text-zinc-400'>Vous avez joué : {played}</p>
 
-          {correct && <p className='mt-2 text-sm text-zinc-300'>{question.explanation}</p>}
+          {/* The original showed the explanation only for a right answer, which left a
+              visitor who was sure of his move with "incorrect" and no reason — the trap
+              chapters above all, where the refused move is the one the chapter exists to
+              warn about. It is shown either way, labelled as the chapter's teaching
+              rather than as praise when the move was wrong. */}
+          {!correct && (
+            <p className='mt-3 text-sm font-medium text-zinc-300'>Ce que le chapitre enseigne :</p>
+          )}
+
+          <p className='mt-2 text-sm text-zinc-300'>{question.explanation}</p>
         </div>
       )}
     </div>
