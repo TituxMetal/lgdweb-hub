@@ -27,7 +27,7 @@ export const ChessBoard = memo(({ position, interactive = true, onMove }: ChessB
   const resolved = useMemo(() => resolvePosition(position), [position])
 
   return (
-    <div className='mx-auto w-full max-w-[280px] md:max-w-[500px]'>
+    <div className='mx-auto w-full max-w-70 md:max-w-125'>
       <Chessboard
         options={{
           position: resolved,

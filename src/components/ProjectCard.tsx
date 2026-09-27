@@ -22,7 +22,10 @@ const formatDate = (date: string): string => {
 const TechBadges = ({ tech }: { tech: string[] }) => (
   <ul className='mt-3 flex flex-wrap gap-1.5'>
     {tech.map((label) => (
-      <li key={label} className='rounded bg-zinc-700 px-2 py-0.5 font-mono text-xs text-zinc-200'>
+      <li
+        key={label}
+        className='rounded-sm bg-zinc-700 px-2 py-0.5 font-mono text-xs text-zinc-200'
+      >
         {label}
       </li>
     ))}
