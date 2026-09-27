@@ -12,12 +12,30 @@ import { CHESS_STORIES, type ChessStory } from './stories'
 /** A story order shaped like the real one, small enough to reason about: the middle
  *  story holds a single chapter, so a two-step jump has to cross it. */
 const storyOrder: ChessStory[] = [
-  { id: 'one', title: 'One', chapters: [{ id: 'a' }, { id: 'b' }], nextStory: 'two' },
-  { id: 'two', title: 'Two', chapters: [{ id: 'c' }], previousStory: 'one', nextStory: 'three' },
+  {
+    id: 'one',
+    title: 'One',
+    chapters: [
+      { id: 'a', title: 'A' },
+      { id: 'b', title: 'B' }
+    ],
+    nextStory: 'two'
+  },
+  {
+    id: 'two',
+    title: 'Two',
+    chapters: [{ id: 'c', title: 'C' }],
+    previousStory: 'one',
+    nextStory: 'three'
+  },
   {
     id: 'three',
     title: 'Three',
-    chapters: [{ id: 'd' }, { id: 'e' }, { id: 'f' }],
+    chapters: [
+      { id: 'd', title: 'D' },
+      { id: 'e', title: 'E' },
+      { id: 'f', title: 'F' }
+    ],
     previousStory: 'two'
   }
 ]
@@ -100,7 +118,7 @@ describe('nextChapter', () => {
 
   it('is nothing when the next story the index names is not in it', () => {
     const broken: ChessStory[] = [
-      { id: 'one', title: 'One', chapters: [{ id: 'a' }], nextStory: 'gone' }
+      { id: 'one', title: 'One', chapters: [{ id: 'a', title: 'A' }], nextStory: 'gone' }
     ]
 
     expect(nextChapter(broken, 'one', 'a')).toBeNull()
@@ -108,7 +126,7 @@ describe('nextChapter', () => {
 
   it('is nothing when the next story holds no chapter', () => {
     const empty: ChessStory[] = [
-      { id: 'one', title: 'One', chapters: [{ id: 'a' }], nextStory: 'two' },
+      { id: 'one', title: 'One', chapters: [{ id: 'a', title: 'A' }], nextStory: 'two' },
       { id: 'two', title: 'Two', chapters: [], previousStory: 'one' }
     ]
 
@@ -139,7 +157,7 @@ describe('previousChapter', () => {
 
   it('is nothing when the story before the one named is not in the index', () => {
     const broken: ChessStory[] = [
-      { id: 'one', title: 'One', chapters: [{ id: 'a' }], previousStory: 'gone' }
+      { id: 'one', title: 'One', chapters: [{ id: 'a', title: 'A' }], previousStory: 'gone' }
     ]
 
     expect(previousChapter(broken, 'one', 'a')).toBeNull()

@@ -113,9 +113,14 @@ describe('the archived story index', () => {
         expect(await file.exists()).toBe(true)
 
         const text = await file.text()
+        const heading = text.trimStart().split('\n')[0] ?? ''
 
-        expect(text.trimStart().startsWith('## ')).toBe(true)
+        expect(heading.startsWith('## ')).toBe(true)
         expect(text.trim().length).toBeGreaterThan(0)
+
+        // and the index carries that name, so the lessons' table of contents reads
+        // without loading a chapter's text
+        expect(chapter.title).toBe(heading.slice(3).trim())
       }
     }
   })
