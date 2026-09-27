@@ -52,8 +52,25 @@ export const resolvePosition = (position: string | undefined): string => {
   return isPosition(position) ? position : STARTING_FEN
 }
 
-/** Whether the engine reads a position as a legal one. */
-export const isPosition = (position: string): boolean => validateFen(position).ok
+/**
+ * Whether the engine reads a position as one a game can be standing in. Reading is not
+ * enough: `validateFen` answers `ok` for a board where the side *not* to move is already
+ * in check, which no game reaches, and the engine then offers the capture of that king
+ * among the moves it lists. One chapter drew exactly that, and the board played it.
+ */
+export const isPosition = (position: string): boolean => {
+  if (!validateFen(position).ok) return false
+
+  const game = new Chess(position)
+  const opponent = game.turn() === 'w' ? 'b' : 'w'
+  const standing = game
+    .board()
+    .flat()
+    .filter((piece) => piece !== null)
+  const king = standing.find((piece) => piece.color === opponent && piece.type === 'k')
+
+  return king !== undefined && game.attackers(king.square, game.turn()).length === 0
+}
 
 /**
  * Plays a move on a position, or answers `null` when the move is not legal there.

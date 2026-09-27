@@ -6,4 +6,4 @@ Il montre les pièces encore sur leur case de départ.
 "Règle d'or : cavaliers avant fous ! Les cavaliers ont moins de cases au début."  
 "Développe vers le centre, là où tes pièces seront les plus actives !"
 
-Alex a joué e4. Quelle pièce développer en premier pour attaquer le centre ?
+Alex a joué e4. Quel cavalier développer en premier pour attaquer le centre ?
