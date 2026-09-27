@@ -64,11 +64,10 @@ const Chapter = ({ story, chapter, onComplete }: ChapterProps) => {
   const next = nextChapter(CHESS_STORIES, story.id, chapter.id)
   const previous = previousChapter(CHESS_STORIES, story.id, chapter.id)
 
-  // A chapter that asks a move draws the question's own board; the original drew
-  // the chapter's position first in that case too, so those chapters showed the same
-  // position twice, once dead and once playable. The port draws one.
-  const showsPosition =
-    chapter.chessPosition !== undefined && chapter.question?.type !== 'move-based'
+  // A chapter that asks a move draws the question's own board, so it never carries a
+  // position of its own to draw beside it: the read-only board below belongs to the
+  // chapters that only tell a story, and the index spec pins that split.
+  const showsPosition = chapter.chessPosition !== undefined
 
   // The original marked a chapter complete as soon as its question was answered
   // right, and again when the visitor walked past it. The set both write into leaves
@@ -128,11 +127,7 @@ const Chapter = ({ story, chapter, onComplete }: ChapterProps) => {
 
             {chapter.question !== undefined && (
               <div className='mt-8'>
-                <Question
-                  question={chapter.question}
-                  fallbackPosition={chapter.chessPosition}
-                  onAnswer={handleAnswer}
-                />
+                <Question question={chapter.question} onAnswer={handleAnswer} />
               </div>
             )}
           </>

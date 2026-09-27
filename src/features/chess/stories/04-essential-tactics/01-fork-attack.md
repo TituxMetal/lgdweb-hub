@@ -6,7 +6,7 @@ spectaculaire : la fourchette du cavalier !"
 
 Il place une position où le roi noir s'est aventuré au centre de l'échiquier.
 
-"Regarde, Alex. Le roi noir en e7 est mal placé. Et il y a une tour noire abandonnée en a8. Ton
+"Regarde, Alex. Le roi noir en e7 est mal placé. Et il y a une tour noire abandonnée en f4. Ton
 cavalier peut-il les attaquer tous les deux en même temps ?"
 
 "Une fourchette qui attaque le roi s'appelle une 'fourchette royale' - c'est particulièrement

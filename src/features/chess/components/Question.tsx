@@ -5,18 +5,16 @@ import { MoveQuestion } from './MoveQuestion'
 
 type QuestionProps = {
   question: ChessQuestion
-  /** The chapter's own position, for a question that names none of its own. */
-  fallbackPosition?: string
   onAnswer: (correct: boolean) => void
 }
 
 /** The question a chapter asks, in the shape its type calls for. */
-export const Question = ({ question, fallbackPosition, onAnswer }: QuestionProps) => {
+export const Question = ({ question, onAnswer }: QuestionProps) => {
   if (question.type === 'move-based') {
     return (
       <MoveQuestion
         question={question}
-        position={resolvePosition(question.initialPosition ?? fallbackPosition)}
+        position={resolvePosition(question.initialPosition)}
         onAnswer={onAnswer}
       />
     )

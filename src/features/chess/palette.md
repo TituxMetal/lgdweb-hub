@@ -158,10 +158,11 @@ runtime.
   the same update — so the port has the resting, the correct and the wrong states only.
 - **An impossible position falls back to the starting position.** The original meant to
   (`ChessBoard.tsx:33-40`) but tested for six space-separated fields rather than asking the engine, so
-  three of the archived chapters carry a position no board can draw: two black kings
+  its content carried positions no board can draw — two black kings
   (`04-essential-tactics/01-fork-attack`), none (`05-basic-endgames/01-king-queen-vs-king`,
-  `05-basic-endgames/02-king-rook-vs-king`). The port asks the engine and those chapters show the
-  starting position instead of throwing.
+  `05-basic-endgames/02-king-rook-vs-king`) — and others whose move the position made illegal. The port
+  asks the engine, and the content that shipped with that guess is repaired: no chapter names a
+  position the engine refuses, which the index spec asserts by counting the fallbacks at zero.
 - **A move the rules refuse stays where it was.** The original answered the renderer `true` for
   everything a visitor dropped and left the parent to put an illegal piece back; the port asks the
   engine first and returns the piece when the move is not legal.
