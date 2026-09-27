@@ -9,7 +9,8 @@ import { GameCanvas } from './GameCanvas'
  * 20 rows out of a 1440×900 window at 40px per cell; the column is 720px, so the
  * same count would ask for 20px cells. The port keeps the 20 rows and trades six
  * columns for size — 24px cells — so the board still fills the column and the
- * cell a phone scales it down to stays above 11px rather than under 10.
+ * cell a phone scales it to sits around 11px on a 390px-wide screen, rather than
+ * the ~10px the strict ratio would leave for drawing by touch.
  */
 const GRID_SIZE: GridSize = { rows: 20, cols: 30 }
 
@@ -64,8 +65,9 @@ export const GameOfLife = () => {
       </div>
 
       <p className='text-center text-xs text-neutral-500'>
-        Cliquez ou glissez sur la grille pour dessiner · Poser place le motif choisi au centre ·
-        Démarrer lance la simulation · Suivant avance d'une génération
+        Cliquez ou glissez sur la grille pour dessiner · au clavier, les flèches déplacent le
+        curseur et Espace inverse la cellule · Poser place le motif choisi au centre · Démarrer
+        lance la simulation · Suivant avance d'une génération
       </p>
     </section>
   )
