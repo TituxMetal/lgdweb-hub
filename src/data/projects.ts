@@ -108,7 +108,7 @@ export const projects: Project[] = [
     slug: 'pomodoro',
     title: 'Pomodoro Timer',
     date: '2018-05',
-    description: `Minuteur pomodoro de 2018 : quatre durées prêtes — 5, 15, 25 et 55 minutes — et un champ libre pour les autres. Le décompte s'écrit aussi dans le titre de l'onglet et annonce l'heure de fin. Ni pause ni remise à zéro : l'original n'en avait pas, le port non plus.`,
+    description: `Minuteur pomodoro de 2018 : quatre durées prêtes — 5, 15, 25 et 55 minutes — et un champ libre de 1 à 120 minutes pour les autres. Le décompte s'écrit aussi dans le titre de l'onglet et annonce l'heure de fin. Ni pause ni remise à zéro : l'original n'en avait pas, le port non plus.`,
     tech: ['TypeScript', 'React', 'Tailwind'],
     repoUrl: 'https://github.com/TituxMetal/pomodoroTimer'
   },

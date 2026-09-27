@@ -70,12 +70,18 @@ shell's `font-sans`.
   hierarchy at 77px and 19px. The button and field labels keep their 16px, the shell's floor for
   running text.
 - **An exact multiple of sixty hours is written with its hours.** The original prefixed them only
-  when `hours % 60` was non-zero (`app.js:31`), so a 3600-minute entry — which its own field accepts —
-  read `00:00`. The port prefixes them whenever there are any; the rest of the format is the
-  original's, character for character.
-- **The free minutes field is numeric.** The original took any text and let `| 0` turn it into a
-  number; the port keeps that reading (`secondsFromMinutes`) and adds `inputMode='numeric'` so a
-  phone offers digits.
+  when `hours % 60` was non-zero (`app.js:31`), so an entry of sixty hours or more read `00:00`. The
+  port prefixes them whenever there are any; the rest of the format is the original's, character for
+  character. The field's cap (below) puts that form out of reach from the page, so the difference
+  now lives in `formatRemaining` alone.
+- **The free minutes field is numeric, and bounded.** The original took any text, let `| 0` turn it
+  into a number, and armed whatever came out: an empty entry announced a countdown that ended where
+  it started, a negative one froze a past deadline in the display and the tab title, and an entry of
+  hours wrote a display wider than a phone's column. The port keeps the original's reading
+  (`secondsFromMinutes`: truncated, anything unparsable meaning nothing) and adds `inputMode='numeric'`
+  plus the field's domain — 1 to 120 minutes, a longer entry capped at the two hours a pomodoro can
+  run for, anything below refused without arming anything. With the cap, the widest display the
+  field can produce is `2:00:00`.
 - **No icon font, no runtime fetch.** The original loaded its font from Google; nothing is fetched
   here, and the display's own text-shadow is the one arbitrary utility value the look needed.
 
