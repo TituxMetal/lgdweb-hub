@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'bun:test'
 import { applyMove, applyNotation, isPosition, resolvePosition, STARTING_FEN } from './moves'
 
-/** Two positions the archived content carries and no board can draw: one names two
- *  black kings, the other none at all. */
+/** Two positions no board can draw: one names two black kings, the other none at all.
+ *  No shipped chapter carries either — the index spec pins that — so they stand for
+ *  the content a future edit could write. */
 const TWO_BLACK_KINGS = 'r3kb1r/ppppkppp/8/8/8/2N5/PPPPPPPP/R1BQKB1R w KQq - 0 1'
 const NO_BLACK_KING = '8/8/8/8/8/8/4Q3/6K1 b - - 0 1'
 

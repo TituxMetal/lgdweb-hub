@@ -41,8 +41,9 @@ const play = (
  * starting FEN, and a position the engine refuses becomes the starting position
  * too. The original's board fell back to the same place (`ChessBoard.tsx:33-40`),
  * but tested for six space-separated fields instead of asking the engine, so the
- * archived content carries positions its naive check let through and no board can
- * draw — the port's fallback is where those land.
+ * archived content carried positions its naive check let through and no board can
+ * draw. Those are repaired, and the index spec counts the chapters that still land
+ * here at zero, so the fallback is a net rather than a habit.
  */
 export const resolvePosition = (position: string | undefined): string => {
   if (position === undefined || START_KEYWORDS.includes(position)) return STARTING_FEN

@@ -6,8 +6,7 @@ import { ChessBoard } from './ChessBoard'
 
 type MoveQuestionProps = {
   question: ChessQuestion
-  /** The position the question is played from, resolved: the question's own, or the
-   *  chapter's when it names none. */
+  /** The position the question is played from, resolved. */
   position: string
   /** Called with every move a visitor plays, right or wrong, as the original did:
    *  a wrong move still lets the chapter be left behind. */

@@ -108,7 +108,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           type: 'move-based',
           prompt:
             'Déplacez le cavalier blanc (côté roi) en forme de L pour attaquer une case devant les pions noirs.',
-          correctAnswer: ['g1f3', 'g1e2', 'b1c3', 'b1d2'],
+          correctAnswer: ['g1f3', 'g1h3'],
           explanation:
             'Excellent ! Le cavalier se déplace en L et peut sauter par-dessus les pions.',
           initialPosition: 'start'
@@ -190,8 +190,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           correctAnswer: ['c4d5'],
           explanation: 'Excellent ! Vous avez capturé le pion en déplaçant votre fou sur sa case.',
           initialPosition: 'rnbqkb1r/pppp1ppp/8/3p4/2B5/8/PPPP1PPP/RNBQK1NR w KQkq - 0 1'
-        },
-        chessPosition: 'rnbqkb1r/pppp1ppp/8/3p4/2B5/8/PPPP1PPP/RNBQK1NR w KQkq - 0 1'
+        }
       },
       {
         id: '03-special-moves',
@@ -244,8 +243,8 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           prompt: 'Le cavalier blanc peut créer une fourchette royale ! Trouvez le bon coup.',
           correctAnswer: ['c3d5'],
           explanation:
-            'Bravo ! Cd5+ fait une fourchette royale : le cavalier attaque le roi en e7 et gagne la tour en a8 !',
-          initialPosition: 'r3kb1r/ppppkppp/8/8/8/2N5/PPPPPPPP/R1BQKB1R w KQq - 0 1'
+            'Bravo ! Cd5+ fait une fourchette royale : le cavalier attaque le roi en e7 et gagne la tour en f4 !',
+          initialPosition: '8/3pkppp/8/8/5r2/2N5/5PPP/6K1 w - - 0 1'
         }
       },
       {
@@ -279,8 +278,8 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           prompt: 'Placez votre dame pour attaquer à la fois le roi et la tour noirs.',
           correctAnswer: ['d1d5'],
           explanation:
-            'Excellent ! La dame attaque le roi en e8 et menace aussi de capturer la tour en a8 !',
-          initialPosition: 'r1bqkb1r/pppp1ppp/2n5/8/4P3/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 0 4'
+            'Excellent ! La dame attaque le roi en g8 et menace aussi de capturer la tour en a8 !',
+          initialPosition: 'rnb2rk1/p1ppq1pp/8/8/4P3/2N5/PPP2PPP/R2Q1RK1 w - - 0 1'
         }
       },
       {
@@ -288,10 +287,10 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         question: {
           type: 'move-based',
           prompt: 'Trouvez la combinaison tactique qui gagne du matériel.',
-          correctAnswer: ['f3d4'],
+          correctAnswer: ['d5f6'],
           explanation:
-            'Bravo ! Cette combinaison utilise plusieurs tactiques que vous avez apprises !',
-          initialPosition: 'r1bq1rk1/ppp2ppp/2n1bn2/2bpp3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQ - 0 6'
+            'Bravo ! Le cavalier bondit en f6 : échec au roi en g8, et la dame en e8 est attaquée sans être défendue. Le roi doit bouger, et le cavalier prend la dame !',
+          initialPosition: 'r1b1q1kr/pppp1p1p/2n5/3NP3/2B5/3P1N2/PPP2PPP/R1BQ1RK1 w - - 0 1'
         }
       }
     ],
@@ -310,7 +309,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           correctAnswer: ['e2e8'],
           explanation:
             "Parfait ! La dame donne échec et mat car le roi noir ne peut s'échapper nulle part !",
-          initialPosition: '8/8/8/8/8/8/4Q3/6K1 b - - 0 1'
+          initialPosition: '7k/8/6K1/8/8/8/4Q3/8 w - - 0 1'
         }
       },
       {
@@ -321,9 +320,8 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           correctAnswer: ['e2e8'],
           explanation:
             "Excellent ! La tour contrôle toute la rangée et donne mat avec l'aide du roi blanc !",
-          initialPosition: '8/8/8/8/8/8/4R3/6K1 b - - 0 1'
-        },
-        chessPosition: '8/8/8/8/8/8/4R3/6K1 b - - 0 1'
+          initialPosition: '7k/8/6K1/8/8/8/4R3/8 w - - 0 1'
+        }
       },
       {
         id: '03-king-pawn-endgame',
@@ -333,8 +331,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           correctAnswer: ['e4e5'],
           explanation: 'Bien joué ! Le pion avance vers la transformation en dame !',
           initialPosition: '8/8/8/8/4P3/8/8/4K2k w - - 0 1'
-        },
-        chessPosition: '8/8/8/8/4P3/8/8/4K2k w - - 0 1'
+        }
       },
       {
         id: '04-opposition',
@@ -344,9 +341,8 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           correctAnswer: ['d3d4'],
           explanation:
             "Parfait ! Maintenant les rois se font face avec une case entre eux. Vous avez l'opposition !",
-          initialPosition: '8/8/8/3k4/8/3K4/8/8 w - - 0 1'
-        },
-        chessPosition: '8/8/8/3k4/8/3K4/8/8 w - - 0 1'
+          initialPosition: '8/8/3k4/8/8/3K4/8/8 w - - 0 1'
+        }
       },
       {
         id: '05-stalemate-traps',
@@ -357,8 +353,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           explanation:
             'Excellent ! La dame en b2 donne mat tout en laissant une case libre au roi noir.',
           initialPosition: '8/8/8/8/8/8/k1K5/1Q6 w - - 0 1'
-        },
-        chessPosition: '8/8/8/8/8/8/k1K5/1Q6 w - - 0 1'
+        }
       }
     ],
     previousStory: '04-essential-tactics',
@@ -377,8 +372,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           explanation:
             "Parfait ! e4 contrôle les cases centrales d5 et f5, c'est un excellent premier coup !",
           initialPosition: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-        },
-        chessPosition: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+        }
       },
       {
         id: '02-piece-development',
@@ -388,9 +382,8 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           correctAnswer: ['g1f3'],
           explanation:
             'Parfait ! Le cavalier en f3 attaque le centre et se développe rapidement. Cavaliers avant fous !',
-          initialPosition: 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1'
-        },
-        chessPosition: 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1'
+          initialPosition: 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2'
+        }
       },
       {
         id: '03-king-safety',
@@ -401,8 +394,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           explanation:
             "Excellent ! Le petit roque met le roi à l'abri et active la tour. Sécurité avant tout !",
           initialPosition: 'r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 4'
-        },
-        chessPosition: 'r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 4'
+        }
       },
       {
         id: '04-common-mistakes',
@@ -425,8 +417,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           explanation:
             "Parfait ! e4 commence l'ouverture italienne : 1.e4 e5 2.Cf3 Cc6 3.Fc4. Une ouverture classique !",
           initialPosition: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-        },
-        chessPosition: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+        }
       }
     ],
     previousStory: '05-basic-endgames'
