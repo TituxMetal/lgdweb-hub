@@ -4,9 +4,12 @@ The app needs one parameterized route (`/projects/:slug`) plus internal sub-rout
 features that have them (chess exposes three URLs today). We hand-write the router at
 `src/lib/router.tsx` on the History API — `navigate`, `<Link>`, `useCurrentPath`,
 `useRouteParams`, `RouterView` — and split routing in two layers by responsibility: a minimal
-central map with a single parameterized route and no wildcards, and per-feature sub-routing where
-the feature reads the pathname past its own prefix. React Router was tried on the chess project
-and explicitly rejected, which is why the question was reopened rather than defaulted.
+central map with a single parameterized route, and per-feature sub-routing where the feature reads
+the pathname past its own prefix. The project route matches by **prefix**: a URL under
+`/projects/<slug>` reaches that project however deep it goes, and the feature owns everything past
+its prefix — the central map still carries no route, and no knowledge, of any feature's internals.
+React Router was tried on the chess project and explicitly rejected, which is why the question was
+reopened rather than defaulted.
 
 ## Considered options
 
@@ -18,6 +21,8 @@ and explicitly rejected, which is why the question was reopened rather than defa
 
 ## Consequences
 
-The central router carries no wildcards, so a feature that needs internal URLs owns them; the
+The central map carries no wildcard pattern: the project route matches the leading segments of a URL
+(`matchRoutePrefix`), whatever follows them belongs to the feature mounted there, and the feature
+reads that remainder itself — so its internal paths stay addressable, shareable and reloadable. The
 feature-folder boundary then also applies to routing. Lazy loading is wired at the central level
 (`React.lazy` at the route entry), so the central map never learns what a feature contains.

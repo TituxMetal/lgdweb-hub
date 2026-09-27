@@ -1,10 +1,15 @@
 /**
- * Mini-router on top of the History API. No nesting, no wildcards: one pattern,
- * one render. Patterns use `:name` segments to capture params.
+ * Mini-router on top of the History API. One pattern, one render — no nesting.
+ * Patterns use `:name` segments to capture params.
+ *
+ * A route may be declared as a *branch* (`prefix: true`): it then matches the
+ * leading segments of a deeper path and the feature it mounts reads the rest of
+ * the pathname itself, so a feature's internal URLs stay addressable while the
+ * central map learns nothing about what the feature contains.
  *
  * Public API: `navigate`, `<Link>`, `useCurrentPath`, `useRouteParams`,
- * `isPlainLeftClick`, `<RouterView>`. `matchRoute` and `createRouter` are exported
- * for tests and non-browser callers.
+ * `isPlainLeftClick`, `<RouterView>`. `matchRoute`, `matchRoutePrefix`,
+ * `findRoute` and `createRouter` are exported for tests and non-browser callers.
  */
 import { type MouseEvent, type ReactNode, useSyncExternalStore } from 'react'
 
@@ -12,28 +17,46 @@ export type Params = Record<string, string>
 
 type Listener = () => void
 
+const pathSegments = (path: string): string[] => path.split('/').filter(Boolean)
+
 /** Returns the extracted params if `path` matches `pattern`, or `null`. */
 export const matchRoute = (path: string, pattern: string): Params | null => {
-  const pathSegments = path.split('/').filter(Boolean)
-  const patternSegments = pattern.split('/').filter(Boolean)
+  const pathParts = pathSegments(path)
+  const patternParts = pathSegments(pattern)
 
-  if (pathSegments.length !== patternSegments.length) return null
-  if (pathSegments.length === 0) return {}
+  if (pathParts.length !== patternParts.length) return null
+  if (patternParts.length === 0) return {}
+
+  return matchRoutePrefix(path, pattern)
+}
+
+/**
+ * Returns the params `pattern` captures at the start of `path` — whatever the
+ * path carries past them belongs to the feature the route mounts — or `null`
+ * when `path` does not start with the pattern. A pattern with no segments is
+ * never a branch: a branch owns paths deeper than itself.
+ */
+export const matchRoutePrefix = (path: string, pattern: string): Params | null => {
+  const pathParts = pathSegments(path)
+  const patternParts = pathSegments(pattern)
+
+  if (patternParts.length === 0) return null
+  if (pathParts.length < patternParts.length) return null
 
   const params: Params = {}
 
-  for (let i = 0; i < patternSegments.length; i++) {
-    const patternSeg = patternSegments[i]
-    const pathSeg = pathSegments[i]
+  for (let i = 0; i < patternParts.length; i++) {
+    const patternPart = patternParts[i]
+    const pathPart = pathParts[i]
 
-    if (patternSeg === undefined || pathSeg === undefined) return null
+    if (patternPart === undefined || pathPart === undefined) return null
 
-    if (patternSeg.startsWith(':')) {
-      params[patternSeg.slice(1)] = pathSeg
+    if (patternPart.startsWith(':')) {
+      params[patternPart.slice(1)] = pathPart
       continue
     }
 
-    if (patternSeg !== pathSeg) return null
+    if (patternPart !== pathPart) return null
   }
 
   return params
@@ -117,6 +140,8 @@ type LinkProps = {
   children: ReactNode
   className?: string
   title?: string
+  /** The control's spoken name, when its visible text is not enough on its own. */
+  'aria-label'?: string
 }
 
 /**
@@ -135,7 +160,7 @@ export const isPlainLeftClick = (event: MouseEvent<HTMLAnchorElement>): boolean 
 
 /** Anchor that intercepts plain left-clicks to call `navigate(to)` instead of a
  * full reload. */
-export const Link = ({ to, children, className, title }: LinkProps) => {
+export const Link = ({ to, children, className, title, 'aria-label': ariaLabel }: LinkProps) => {
   const onClick = (event: MouseEvent<HTMLAnchorElement>): void => {
     if (!isPlainLeftClick(event)) return
 
@@ -144,7 +169,7 @@ export const Link = ({ to, children, className, title }: LinkProps) => {
   }
 
   return (
-    <a href={to} onClick={onClick} className={className} title={title}>
+    <a href={to} onClick={onClick} className={className} title={title} aria-label={ariaLabel}>
       {children}
     </a>
   )
@@ -153,6 +178,12 @@ export const Link = ({ to, children, className, title }: LinkProps) => {
 export type RouteDefinition = {
   pattern: string
   render: (params: Params) => ReactNode
+  /**
+   * A branch: the route owns every path past its own pattern, and the feature it
+   * mounts reads the rest of the pathname itself. The central map still carries
+   * no knowledge of what the feature contains.
+   */
+  prefix?: boolean
 }
 
 type RouterViewProps = {
@@ -160,14 +191,35 @@ type RouterViewProps = {
   fallback?: () => ReactNode
 }
 
+/**
+ * The first route that answers for `path`, with the params it captured, or `null`.
+ * A route declared as a branch (`prefix: true`) matches the leading segments of a
+ * deeper path and owns whatever follows; every other route must match the whole
+ * path. `RouterView` renders through this, so the predicate the shell applies is
+ * the one its callers can test.
+ */
+export const findRoute = <P extends Params = Params>(
+  path: string,
+  routes: RouteDefinition[]
+): { route: RouteDefinition; params: P } | null => {
+  for (const route of routes) {
+    const params =
+      route.prefix === true
+        ? matchRoutePrefix(path, route.pattern)
+        : matchRoute(path, route.pattern)
+
+    if (params) return { route, params: params as P }
+  }
+
+  return null
+}
+
 /** Renders the first route whose pattern matches the current path, else `fallback`. */
 export const RouterView = ({ routes, fallback }: RouterViewProps) => {
   const path = useCurrentPath()
+  const match = findRoute(path, routes)
 
-  for (const route of routes) {
-    const params = matchRoute(path, route.pattern)
-    if (params) return <>{route.render(params)}</>
-  }
+  if (match !== null) return <>{match.route.render(match.params)}</>
 
   return <>{fallback?.() ?? null}</>
 }

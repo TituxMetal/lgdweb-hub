@@ -42,11 +42,19 @@ const NotFound = () => (
   </section>
 )
 
-const routes: RouteDefinition[] = [
+/**
+ * The central map. Exported so the routing seam can be asserted against the table
+ * the shell actually renders: a prefix branch is load-bearing, and a test that
+ * builds its own table would not notice the declaration losing its flag.
+ */
+export const routes: RouteDefinition[] = [
   { pattern: '/', render: () => <Home /> },
   {
+    // The project branch: everything past `/projects/<slug>` belongs to the
+    // feature, which reads it itself. The map never learns what is there.
     pattern: PROJECT_ROUTE_PATTERN,
-    render: (params) => renderProject(params.slug ?? '')
+    render: (params) => renderProject(params.slug ?? ''),
+    prefix: true
   }
 ]
 
