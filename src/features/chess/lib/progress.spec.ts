@@ -11,7 +11,11 @@ import type { ChessStory } from './stories'
 const story: ChessStory = {
   id: 'one',
   title: 'One',
-  chapters: [{ id: 'a' }, { id: 'b' }, { id: 'c' }]
+  chapters: [
+    { id: 'a', title: 'A' },
+    { id: 'b', title: 'B' },
+    { id: 'c', title: 'C' }
+  ]
 }
 
 describe('chapterKey', () => {

@@ -62,6 +62,33 @@ export const ChessEntry = () => {
             </div>
           ))}
         </div>
+
+        <nav className='mt-20 w-full max-w-4xl text-left' aria-label='Sommaire des leçons'>
+          <h3 className='mb-6 text-center text-lg font-medium text-zinc-100'>
+            Sommaire des leçons
+          </h3>
+
+          <ol className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+            {CHESS_STORIES.map((story) => (
+              <li key={story.id} className='rounded-lg border border-zinc-700 bg-zinc-800 p-6'>
+                <p className='mb-3 font-medium text-amber-300'>{story.title}</p>
+
+                <ul className='space-y-1.5'>
+                  {story.chapters.map((chapter, index) => (
+                    <li key={chapter.id}>
+                      <Link
+                        to={chapterPath(story.id, chapter.id)}
+                        className='text-sm text-zinc-300 hover:text-amber-400 hover:underline'
+                      >
+                        {index + 1}. {chapter.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </nav>
       </section>
     </>
   )

@@ -31,6 +31,9 @@ export type ChessQuestion = {
 
 export type ChessChapter = {
   id: string
+  /** The chapter's own name, the heading its text opens on, for the lessons' table of
+   *  contents: reading it must not cost the chapter's text. */
+  title: string
   /** The position the chapter shows: a FEN, or the original's `startpos`. */
   chessPosition?: string
   question?: ChessQuestion
@@ -52,6 +55,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
     chapters: [
       {
         id: '01-what-is-chess',
+        title: "Qu'est-ce que les échecs ?",
         question: {
           type: 'multiple-choice',
           prompt: "Combien de joueurs participent à une partie d'échecs ?",
@@ -63,6 +67,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '02-the-chessboard',
+        title: "L'échiquier",
         question: {
           type: 'multiple-choice',
           prompt: 'Combien de cases possède un échiquier ?',
@@ -74,6 +79,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '03-the-pieces-overview',
+        title: 'Présentation des pièces',
         question: {
           type: 'multiple-choice',
           prompt: 'Combien de pièces chaque joueur possède-t-il au début de la partie ?',
@@ -93,6 +99,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
     chapters: [
       {
         id: '01-pawn',
+        title: 'Le pion',
         question: {
           type: 'move-based',
           prompt: "Déplacez le pion blanc devant le roi (e2) de deux cases vers l'avant.",
@@ -104,6 +111,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '02-knight',
+        title: 'Le cavalier',
         question: {
           type: 'move-based',
           prompt:
@@ -116,6 +124,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '03-bishop',
+        title: 'Le fou',
         question: {
           type: 'multiple-choice',
           prompt: 'Sur quelles cases le fou se déplace-t-il ?',
@@ -130,6 +139,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '04-rook',
+        title: 'La tour',
         question: {
           type: 'move-based',
           prompt: 'Capturez le cavalier noir en f6 avec votre tour blanche.',
@@ -141,6 +151,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '05-queen',
+        title: 'La dame',
         question: {
           type: 'multiple-choice',
           prompt: 'Pourquoi la dame est-elle la pièce la plus puissante ?',
@@ -156,6 +167,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '06-king',
+        title: 'Le roi',
         question: {
           type: 'multiple-choice',
           prompt: 'Combien de cases le roi peut-il parcourir à chaque tour ?',
@@ -174,6 +186,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
     chapters: [
       {
         id: '01-turn-order',
+        title: "L'ordre des tours",
         question: {
           type: 'multiple-choice',
           prompt: "Qui commence toujours la partie d'échecs ?",
@@ -184,6 +197,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '02-capturing',
+        title: 'La prise des pièces',
         question: {
           type: 'move-based',
           prompt: 'Capturez le pion noir sur d5 avec votre fou blanc.',
@@ -194,6 +208,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '03-special-moves',
+        title: 'Les coups spéciaux',
         question: {
           type: 'multiple-choice',
           prompt: 'Quel coup spécial permet au roi et à la tour de bouger ensemble ?',
@@ -204,6 +219,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '04-check-checkmate',
+        title: 'Échec et mat',
         question: {
           type: 'multiple-choice',
           prompt: 'Que signifie échec et mat ?',
@@ -219,6 +235,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '05-opening-principles',
+        title: "Principes d'ouverture",
         question: {
           type: 'multiple-choice',
           prompt: "Quel est un bon principe d'ouverture aux échecs ?",
@@ -238,6 +255,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
     chapters: [
       {
         id: '01-fork-attack',
+        title: 'La fourchette du cavalier',
         question: {
           type: 'move-based',
           prompt: 'Le cavalier blanc peut créer une fourchette royale ! Trouvez le bon coup.',
@@ -249,6 +267,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '02-pin-skewer',
+        title: 'Le clouage',
         question: {
           type: 'move-based',
           prompt:
@@ -261,6 +280,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '03-discovered-attack',
+        title: "L'attaque à la découverte",
         question: {
           type: 'move-based',
           prompt:
@@ -273,6 +293,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '04-double-attack',
+        title: 'La double attaque',
         question: {
           type: 'move-based',
           prompt: 'Placez votre dame pour attaquer à la fois le roi et la tour noirs.',
@@ -284,6 +305,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '05-tactical-puzzles',
+        title: 'Puzzles tactiques',
         question: {
           type: 'move-based',
           prompt: 'Trouvez la combinaison tactique qui gagne du matériel.',
@@ -303,6 +325,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
     chapters: [
       {
         id: '01-king-queen-vs-king',
+        title: 'Roi et dame contre roi',
         question: {
           type: 'move-based',
           prompt: 'Donnez échec et mat avec la dame et le roi blancs.',
@@ -314,6 +337,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '02-king-rook-vs-king',
+        title: 'Roi et tour contre roi',
         question: {
           type: 'move-based',
           prompt: 'Utilisez votre tour pour donner échec et mat au roi noir.',
@@ -325,6 +349,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '03-king-pawn-endgame',
+        title: 'Finale roi et pion',
         question: {
           type: 'move-based',
           prompt: 'Avancez votre pion vers la promotion.',
@@ -335,6 +360,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '04-opposition',
+        title: "L'opposition",
         question: {
           type: 'move-based',
           prompt: "Prenez l'opposition en plaçant votre roi face au roi adverse.",
@@ -346,6 +372,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '05-stalemate-traps',
+        title: 'Éviter le pat',
         question: {
           type: 'move-based',
           prompt: 'Donnez mat sans faire pat au roi noir.',
@@ -365,6 +392,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
     chapters: [
       {
         id: '01-center-control',
+        title: 'Contrôle du centre',
         question: {
           type: 'move-based',
           prompt: 'Jouez un coup de pion qui occupe une case centrale.',
@@ -376,6 +404,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '02-piece-development',
+        title: 'Développement des pièces',
         question: {
           type: 'move-based',
           prompt: 'Développez un cavalier vers le centre.',
@@ -387,6 +416,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '03-king-safety',
+        title: 'Sécurité du roi',
         question: {
           type: 'move-based',
           prompt: 'Mettez votre roi en sécurité avec le roque.',
@@ -398,6 +428,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '04-common-mistakes',
+        title: 'Erreurs courantes',
         question: {
           type: 'multiple-choice',
           prompt: 'Que ne faut-il PAS faire en ouverture ?',
@@ -410,6 +441,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
       },
       {
         id: '05-simple-openings',
+        title: 'Ouvertures simples',
         question: {
           type: 'move-based',
           prompt: "Commencez l'ouverture italienne avec e4.",
