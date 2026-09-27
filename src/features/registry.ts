@@ -22,6 +22,9 @@ const PROJECT_FEATURES: Readonly<Record<string, LazyExoticComponent<ComponentTyp
   ),
   pomodoro: lazy(() =>
     import('~/features/pomodoro').then((module) => ({ default: module.Pomodoro }))
+  ),
+  'game-of-life': lazy(() =>
+    import('~/features/game-of-life').then((module) => ({ default: module.GameOfLife }))
   )
 }
 
