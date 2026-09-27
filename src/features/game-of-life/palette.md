@@ -102,5 +102,10 @@ printed on, not the coloured cells that carry the pattern.
   cell and paints every further cell it crosses with that same state, so a stroke draws a shape
   rather than flipping cells back and forth under the pointer — the touch input the original, with
   its mouse-only click, never needed.
-- The hint under the plate, `text-neutral-500`, naming the three interactions the canvas does not
+- The pattern picker: four shapes a visitor can drop on the board — clignotant (blinker), bloc
+  (block), crapaud (toad) and planeur (glider), declared in `lib/patterns.ts` — stamped centred by
+  `stampPattern`. The original seeded one glider at construction (`helpers/GameState.js`, reused
+  here as the `glider` pattern) and offered no way to place a second shape, so the classic patterns
+  the Game of Life is read through were out of reach.
+- The hint under the plate, `text-neutral-500`, naming the interactions the canvas does not
   advertise by itself.

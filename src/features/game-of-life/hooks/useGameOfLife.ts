@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { createGrid, nextGeneration, randomGrid, seedGlider, setCell } from '../lib/grid'
+import {
+  createGrid,
+  nextGeneration,
+  randomGrid,
+  seedGlider,
+  setCell,
+  stampPattern
+} from '../lib/grid'
+import { DEFAULT_PATTERN_ID, patternById } from '../lib/patterns'
 import { DEFAULT_SPEED_ID, speedInterval } from '../lib/speed'
 import type { CellState, Grid, GridSize } from '../types'
 
@@ -16,12 +24,15 @@ type GameOfLifeController = {
   running: boolean
   torus: boolean
   speedId: string
+  patternId: string
   step: () => void
   toggleRunning: () => void
   clear: () => void
   randomize: () => void
+  stamp: () => void
   toggleTorus: () => void
   setSpeedId: (id: string) => void
+  setPatternId: (id: string) => void
   paintCell: (row: number, col: number, state: CellState) => void
 }
 
@@ -38,6 +49,7 @@ export const useGameOfLife = ({ size }: UseGameOfLifeInput): GameOfLifeControlle
   // manifest copy still promises "Mode tore disponible".
   const [torus, setTorus] = useState(true)
   const [speedId, setSpeedId] = useState(DEFAULT_SPEED_ID)
+  const [patternId, setPatternId] = useState(DEFAULT_PATTERN_ID)
 
   // The loop reads the neighbourhood through a ref: switching it must not restart
   // the animation frame, nor reset the time it has accumulated.
@@ -97,6 +109,15 @@ export const useGameOfLife = ({ size }: UseGameOfLifeInput): GameOfLifeControlle
     setGeneration(0)
   }, [size])
 
+  // A pattern is stamped onto the board as it stands — an edit, like drawing, not
+  // a reseed — so the generation counter keeps counting what is on screen.
+  const stamp = useCallback(() => {
+    const pattern = patternById(patternId)
+    if (pattern === undefined) return
+
+    setGrid((current) => stampPattern(current, pattern))
+  }, [patternId])
+
   const toggleTorus = useCallback(() => setTorus((value) => !value), [])
 
   const paintCell = useCallback((row: number, col: number, state: CellState) => {
@@ -109,12 +130,15 @@ export const useGameOfLife = ({ size }: UseGameOfLifeInput): GameOfLifeControlle
     running,
     torus,
     speedId,
+    patternId,
     step,
     toggleRunning,
     clear,
     randomize,
+    stamp,
     toggleTorus,
     setSpeedId,
+    setPatternId,
     paintCell
   }
 }

@@ -1,3 +1,4 @@
+import { PATTERNS } from '../lib/patterns'
 import { SPEEDS } from '../lib/speed'
 
 /**
@@ -20,12 +21,15 @@ type ControlsProps = {
   running: boolean
   torus: boolean
   speedId: string
+  patternId: string
   onToggleRunning: () => void
   onStep: () => void
   onClear: () => void
   onRandomize: () => void
   onToggleTorus: () => void
   onSpeedChange: (id: string) => void
+  onPatternChange: (id: string) => void
+  onStamp: () => void
 }
 
 export const Controls = ({
@@ -33,12 +37,15 @@ export const Controls = ({
   running,
   torus,
   speedId,
+  patternId,
   onToggleRunning,
   onStep,
   onClear,
   onRandomize,
   onToggleTorus,
-  onSpeedChange
+  onSpeedChange,
+  onPatternChange,
+  onStamp
 }: ControlsProps) => (
   <section className='flex w-full flex-wrap items-center justify-evenly gap-x-2 gap-y-2 p-2 text-sm'>
     <button
@@ -64,6 +71,27 @@ export const Controls = ({
     <button type='button' onClick={onToggleTorus} aria-pressed={torus} className={TOGGLE}>
       Mode tore
     </button>
+
+    <label className='flex items-center gap-2 text-orange-100'>
+      Motif
+      <select
+        value={patternId}
+        onChange={(event) => onPatternChange(event.target.value)}
+        className={SELECT}
+      >
+        {PATTERNS.map((pattern) => (
+          <option key={pattern.id} value={pattern.id}>
+            {pattern.label}
+          </option>
+        ))}
+      </select>
+      <button type='button' onClick={onStamp} className={BUTTON}>
+        Poser
+      </button>
+      <span className='max-w-56 text-xs text-orange-100/70'>
+        {PATTERNS.find((pattern) => pattern.id === patternId)?.note}
+      </span>
+    </label>
 
     <label className='flex items-center gap-2 text-orange-100'>
       Vitesse
