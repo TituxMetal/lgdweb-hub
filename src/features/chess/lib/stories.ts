@@ -107,7 +107,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         question: {
           type: 'move-based',
           prompt:
-            'Déplacez le cavalier blanc (côté roi) en forme de L pour attaquer une case devant les pions noirs.',
+            'Déplacez le cavalier blanc (côté roi) en forme de L pour attaquer une case devant vos pions.',
           correctAnswer: ['g1f3', 'g1h3'],
           explanation:
             'Excellent ! Le cavalier se déplace en L et peut sauter par-dessus les pions.',
@@ -132,7 +132,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         id: '04-rook',
         question: {
           type: 'move-based',
-          prompt: 'Déplacez la tour blanche pour attaquer directement le cavalier noir sur f6.',
+          prompt: 'Capturez le cavalier noir en f6 avec votre tour blanche.',
           correctAnswer: ['f1f6'],
           explanation:
             'Parfait ! La tour se déplace en ligne droite et peut attaquer sur toute sa trajectoire.',
@@ -252,7 +252,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         question: {
           type: 'move-based',
           prompt:
-            'Clouez le cavalier noir qui protège la dame ! Placez votre fou sur la bonne diagonale.',
+            'Clouez le cavalier noir devant la dame ! Placez votre fou sur la bonne diagonale.',
           correctAnswer: ['f1b5'],
           explanation:
             "Parfait ! Le fou en b5 cloue le cavalier en c6 : s'il bouge, la dame en d7 sera prise !",
@@ -264,11 +264,11 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         question: {
           type: 'move-based',
           prompt:
-            'Bougez le cavalier pour révéler une attaque dévastatrice de votre fou sur le roi noir !',
-          correctAnswer: ['e4d6'],
+            "Bougez le cavalier pour révéler l'échec de votre fou en b5 et gagner la dame noire !",
+          correctAnswer: ['c6a5'],
           explanation:
-            "Formidable ! Cd6+ révèle l'attaque du fou sur le roi ET le cavalier attaque la dame en b7 !",
-          initialPosition: 'r3kb1r/1q2pppp/8/8/4N3/8/PPPP1PPP/R1BQKB1R w KQkq - 0 1'
+            "Formidable ! Ca5+ découvre l'attaque du fou en b5 sur le roi en e8, et le cavalier attaque la dame en b7 !",
+          initialPosition: 'rn2kb1r/pq2bppp/2N2n2/1B6/P7/8/1PPP1PPP/RN1QKB1R w KQkq - 0 1'
         }
       },
       {
@@ -349,10 +349,10 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         question: {
           type: 'move-based',
           prompt: 'Donnez mat sans faire pat au roi noir.',
-          correctAnswer: ['b1b2'],
+          correctAnswer: ['e5b2'],
           explanation:
-            'Excellent ! La dame en b2 donne mat tout en laissant une case libre au roi noir.',
-          initialPosition: '8/8/8/8/8/8/k1K5/1Q6 w - - 0 1'
+            'Excellent ! La dame en b2 donne échec et mat. En c3, elle aurait laissé le roi noir sans case libre et sans échec : un pat !',
+          initialPosition: '8/8/8/4Q3/8/8/k7/2K5 w - - 0 1'
         }
       }
     ],
@@ -367,10 +367,10 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         id: '01-center-control',
         question: {
           type: 'move-based',
-          prompt: "Jouez un coup qui contrôle le centre de l'échiquier.",
-          correctAnswer: ['e2e4'],
+          prompt: 'Jouez un coup de pion qui occupe une case centrale.',
+          correctAnswer: ['e2e4', 'd2d4'],
           explanation:
-            "Parfait ! e4 contrôle les cases centrales d5 et f5, c'est un excellent premier coup !",
+            "Parfait ! Un pion au centre occupe une case centrale et contrôle deux cases voisines : c'est un excellent premier coup !",
           initialPosition: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
         }
       },
@@ -378,10 +378,10 @@ export const CHESS_STORIES: readonly ChessStory[] = [
         id: '02-piece-development',
         question: {
           type: 'move-based',
-          prompt: 'Développez une pièce vers le centre.',
-          correctAnswer: ['g1f3'],
+          prompt: 'Développez un cavalier vers le centre.',
+          correctAnswer: ['g1f3', 'b1c3'],
           explanation:
-            'Parfait ! Le cavalier en f3 attaque le centre et se développe rapidement. Cavaliers avant fous !',
+            'Parfait ! Le cavalier attaque le centre et se développe rapidement. Cavaliers avant fous !',
           initialPosition: 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2'
         }
       },
@@ -406,7 +406,7 @@ export const CHESS_STORIES: readonly ChessStory[] = [
           explanation:
             "Correct ! Sortir la dame trop tôt la met en danger. Développez d'abord les petites pièces !"
         },
-        chessPosition: 'rnbqkb1r/pppp1ppp/5n2/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2'
+        chessPosition: 'rnbqkb1r/pppp1ppp/5n2/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 2 3'
       },
       {
         id: '05-simple-openings',

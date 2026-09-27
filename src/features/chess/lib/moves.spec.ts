@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'bun:test'
+import { validateFen } from 'chess.js'
 import { applyMove, applyNotation, isPosition, resolvePosition, STARTING_FEN } from './moves'
 
-/** Two positions no board can draw: one names two black kings, the other none at all.
- *  No shipped chapter carries either — the index spec pins that — so they stand for
- *  the content a future edit could write. */
+/** Positions no board can draw: one names two black kings, another none at all, and the
+ *  third stands with the black king in check while it is White's turn — which no game
+ *  reaches, and which `validateFen` nevertheless reads as fine. No shipped chapter
+ *  carries any of them — the index spec pins that — so they stand for the content a
+ *  future edit could write, and the third for the one that shipped once. */
 const TWO_BLACK_KINGS = 'r3kb1r/ppppkppp/8/8/8/2N5/PPPPPPPP/R1BQKB1R w KQq - 0 1'
 const NO_BLACK_KING = '8/8/8/8/8/8/4Q3/6K1 b - - 0 1'
+const CHECKED_OFF_TURN = '8/8/8/8/8/8/k1K5/1Q6 w - - 0 1'
 
 describe('resolvePosition', () => {
   it('reads the original’s keywords as the starting position', () => {
@@ -27,6 +31,7 @@ describe('resolvePosition', () => {
     expect(resolvePosition('invalid-fen-string')).toBe(STARTING_FEN)
     expect(resolvePosition(TWO_BLACK_KINGS)).toBe(STARTING_FEN)
     expect(resolvePosition(NO_BLACK_KING)).toBe(STARTING_FEN)
+    expect(resolvePosition(CHECKED_OFF_TURN)).toBe(STARTING_FEN)
   })
 })
 
@@ -40,6 +45,16 @@ describe('isPosition', () => {
     expect(isPosition(TWO_BLACK_KINGS)).toBe(false)
     expect(isPosition(NO_BLACK_KING)).toBe(false)
     expect(isPosition('')).toBe(false)
+  })
+
+  it('refuses a position with the side not to move already in check', () => {
+    // `validateFen` answers ok here, and the engine lists the capture of the king it
+    // names among White's moves: what such a board draws is a position no game reaches
+    expect(validateFen(CHECKED_OFF_TURN).ok).toBe(true)
+    expect(isPosition(CHECKED_OFF_TURN)).toBe(false)
+
+    // the same board with the turn handed over is one a game does stand in
+    expect(isPosition('8/8/8/8/8/8/k1K5/1Q6 b - - 0 1')).toBe(true)
   })
 })
 
