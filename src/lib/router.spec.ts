@@ -1,6 +1,6 @@
 import { describe, expect, it, mock } from 'bun:test'
 import type { MouseEvent } from 'react'
-import { createRouter, isPlainLeftClick, matchRoute } from '~/lib/router'
+import { createRouter, isPlainLeftClick, matchRoute, matchRoutePrefix } from '~/lib/router'
 
 type ClickEvent = MouseEvent<HTMLAnchorElement>
 
@@ -69,6 +69,50 @@ describe('matchRoute', () => {
 
   it('treats trailing slashes as equivalent', () => {
     expect(matchRoute('/projects/', '/projects')).toEqual({})
+  })
+
+  it('refuses a path longer than its pattern — that is a branch, not a match', () => {
+    expect(
+      matchRoute('/projects/chess/story/01-introduction/chapter/01-pawn', '/projects/:slug')
+    ).toBeNull()
+  })
+})
+
+/**
+ * The project branch: a feature owns every path under its own prefix, so the
+ * route that mounts it matches the leading segments of a deeper path and the
+ * feature reads the rest for itself.
+ */
+describe('matchRoutePrefix', () => {
+  it('matches a branch and extracts its params', () => {
+    expect(matchRoutePrefix('/projects/chess', '/projects/:slug')).toEqual({ slug: 'chess' })
+  })
+
+  it('matches a branch on a deep path, capturing only its own segments', () => {
+    expect(
+      matchRoutePrefix(
+        '/projects/chess/story/01-introduction/chapter/01-what-is-chess',
+        '/projects/:slug'
+      )
+    ).toEqual({ slug: 'chess' })
+  })
+
+  it('treats a trailing slash as the branch itself', () => {
+    expect(matchRoutePrefix('/projects/chess/', '/projects/:slug')).toEqual({ slug: 'chess' })
+  })
+
+  it('refuses a path that does not start with the pattern', () => {
+    expect(matchRoutePrefix('/projects', '/projects/:slug')).toBeNull()
+    expect(matchRoutePrefix('/about/chess', '/projects/:slug')).toBeNull()
+    expect(matchRoutePrefix('/projects/chess', '/story/:storyId')).toBeNull()
+  })
+
+  it('refuses a literal segment that differs under the prefix', () => {
+    expect(matchRoutePrefix('/project/chess', '/projects/:slug')).toBeNull()
+  })
+
+  it('refuses a pattern with no segments: a branch owns paths deeper than itself', () => {
+    expect(matchRoutePrefix('/anything', '/')).toBeNull()
   })
 })
 
