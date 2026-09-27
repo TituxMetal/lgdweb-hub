@@ -35,3 +35,13 @@ export type Speed = {
   label: string
   intervalMs: number
 }
+
+/** One entry of the viewer's pattern picker: a shape the visitor can stamp. */
+export type Pattern = {
+  id: string
+  label: string
+  /** How the pattern behaves, in the visitor's words. */
+  note: string
+  /** The pattern's live cells, as offsets from its own top-left corner. */
+  cells: readonly (readonly [number, number])[]
+}

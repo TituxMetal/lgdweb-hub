@@ -1,4 +1,5 @@
-import { CellState, type Grid, type GridSize, type Neighbourhood } from '../types'
+import { CellState, type Grid, type GridSize, type Neighbourhood, type Pattern } from '../types'
+import { GLIDER_CELLS } from './patterns'
 
 /**
  * The engine, ported from `tuximetal-game-of-life-engine/src/Cell.js` and
@@ -10,19 +11,6 @@ import { CellState, type Grid, type GridSize, type Neighbourhood } from '../type
 
 /** Share of live cells a random seed starts with. */
 const RANDOM_DENSITY = 0.3
-
-/**
- * The glider the original seeded its empty board with
- * (`tuximetal-game-of-life/src/helpers/GameState.js`), kept as offsets from the
- * pattern's own top-left corner so it can be dropped anywhere.
- */
-const GLIDER_OFFSETS: readonly (readonly [number, number])[] = [
-  [0, 2],
-  [1, 0],
-  [1, 2],
-  [2, 1],
-  [2, 2]
-]
 
 /** An empty board of `size`: every cell dead. */
 export const createGrid = ({ rows, cols }: GridSize): Grid =>
@@ -63,10 +51,28 @@ export const randomGrid = (
  * where `GameState.js` seeded it — rows 1–3, columns 0–2.
  */
 export const seedGlider = (grid: Grid, origin = { row: 1, col: 0 }): Grid =>
-  GLIDER_OFFSETS.reduce(
+  GLIDER_CELLS.reduce(
     (board, [row, col]) => setCell(board, origin.row + row, origin.col + col, CellState.alive),
     grid
   )
+
+/**
+ * The board with `pattern` stamped **centred** on it, its own cells added to
+ * whatever is already there. A pattern is dropped rather than drawn — the visitor
+ * gets a shape they can recognise instead of one they have to lay out cell by
+ * cell — and the cells the shape does not name are left alone.
+ */
+export const stampPattern = (grid: Grid, pattern: Pattern): Grid => {
+  const height = Math.max(...pattern.cells.map(([row]) => row)) + 1
+  const width = Math.max(...pattern.cells.map(([, col]) => col)) + 1
+  const top = Math.floor((grid.length - height) / 2)
+  const left = Math.floor(((grid[0]?.length ?? 0) - width) / 2)
+
+  return pattern.cells.reduce(
+    (board, [row, col]) => setCell(board, top + row, left + col, CellState.alive),
+    grid
+  )
+}
 
 /** `Cell#getNextState`, character for character: 2–3 neighbours for a survivor, 3 for a birth. */
 const nextCellState = (state: CellState, aliveNeighbours: number): CellState => {

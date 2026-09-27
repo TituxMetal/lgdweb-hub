@@ -25,12 +25,15 @@ export const GameOfLife = () => {
     running,
     torus,
     speedId,
+    patternId,
     step,
     toggleRunning,
     clear,
     randomize,
+    stamp,
     toggleTorus,
     setSpeedId,
+    setPatternId,
     paintCell
   } = useGameOfLife({ size: GRID_SIZE })
 
@@ -48,18 +51,21 @@ export const GameOfLife = () => {
           running={running}
           torus={torus}
           speedId={speedId}
+          patternId={patternId}
           onToggleRunning={toggleRunning}
           onStep={step}
           onClear={clear}
           onRandomize={randomize}
           onToggleTorus={toggleTorus}
           onSpeedChange={setSpeedId}
+          onPatternChange={setPatternId}
+          onStamp={stamp}
         />
       </div>
 
       <p className='text-center text-xs text-neutral-500'>
-        Cliquez ou glissez sur la grille pour dessiner · Démarrer lance la simulation · Suivant
-        avance d'une génération
+        Cliquez ou glissez sur la grille pour dessiner · Poser place le motif choisi au centre ·
+        Démarrer lance la simulation · Suivant avance d'une génération
       </p>
     </section>
   )
