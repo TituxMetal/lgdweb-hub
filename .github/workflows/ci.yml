@@ -118,10 +118,15 @@ jobs:
 
       - name: No stray CSS
         run: |
-          offenders=$(find src -type f -name '*.css' -not -path 'src/styles/*')
+          # CSS lives in the global styles directory, and a feature — and only a
+          # feature — may keep the one stylesheet its original's look needs, directly
+          # in its own folder. Nothing nested, nowhere else: a component cannot grow a
+          # stylesheet of its own.
+          offenders=$(find src -type f -name '*.css' -regextype posix-extended \
+            -not -regex 'src/styles/.*\.css|src/features/[^/]+/[^/]+\.css')
 
           if [ -n "$offenders" ]; then
-            echo 'CSS must live under src/styles/; move these files:'
+            echo 'CSS must live under src/styles/ or directly in a feature folder; move these files:'
             printf '%s\n' "$offenders"
             exit 1
           fi

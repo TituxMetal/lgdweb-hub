@@ -1,0 +1,42 @@
+/**
+ * The chapter text's own styling, and nothing else.
+ *
+ * The 2025 original carried its component classes in a global stylesheet
+ * (`src/index.css`); this project allows a feature one stylesheet of its own, for
+ * what utilities cannot express. What utilities cannot express here is the chapter
+ * text: react-markdown produces its elements, so no class can be written on them,
+ * and the original's own look for that text lived in exactly these rules.
+ *
+ * The colours are the ones that took effect in the original, in the order its
+ * stylesheet declared them: its `.prose-enhanced` block came first and its
+ * `.prose-invert` block after, and where both named an element the later block won —
+ * so a paragraph is `slate-300`, not `zinc-200`. `palette.md` records the mapping.
+ */
+@reference '../../styles/globals.css';
+
+/* The chapter's title: the file opens on it, and the original set its own title
+   element in the same hand — `text-3xl`, semibold, with room under it. Its colour is
+   the one its `.prose-invert` block gave every heading, which is what took effect. */
+.chess-chapter h2 {
+  @apply mb-10 text-3xl font-semibold text-slate-100;
+}
+
+.chess-chapter p {
+  @apply text-slate-300;
+  line-height: 1.625;
+}
+
+/* Tailwind's reset takes the paragraph rhythm away; the original's text had none of
+   its own left, which read as one block. The port gives the story back its
+   paragraphs. */
+.chess-chapter p + p {
+  margin-top: 1rem;
+}
+
+.chess-chapter strong {
+  @apply font-semibold text-slate-50;
+}
+
+.chess-chapter em {
+  @apply text-slate-200;
+}
