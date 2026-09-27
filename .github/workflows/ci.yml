@@ -131,6 +131,19 @@ jobs:
             exit 1
           fi
 
+          # And one is the whole allowance: "the one stylesheet its look needs" means a
+          # feature folder holds at most one, which a path check cannot see.
+          for feature in src/features/*/; do
+            [ -d "$feature" ] || continue
+
+            count=$(find "$feature" -maxdepth 1 -type f -name '*.css' 2>/dev/null | wc -l | tr -d ' ')
+
+            if [ "$count" -gt 1 ]; then
+              echo "$feature holds $count stylesheets; one is the allowance."
+              exit 1
+            fi
+          done
+
   docker-check:
     name: Build image (no push)
     runs-on: ubuntu-latest
