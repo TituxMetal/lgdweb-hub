@@ -93,7 +93,7 @@ export const PortfolioNav = ({ active, onNavigate }: PortfolioNavProps) => {
               section={section}
               active={active}
               onNavigate={onNavigate}
-              className='border-b-2 px-5 py-4 text-[18px] font-bold uppercase transition-colors hover:border-orange-400'
+              className='border-b-2 px-5 py-4 text-base font-bold uppercase transition-colors hover:border-orange-400'
             />
           ))}
         </nav>
@@ -104,7 +104,7 @@ export const PortfolioNav = ({ active, onNavigate }: PortfolioNavProps) => {
         aria-label='Ouvrir le menu'
         aria-expanded={open}
         onClick={() => setOpen(true)}
-        className='fixed top-[4vw] right-[4vw] z-30 flex size-[50px] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-full bg-neutral-950/20 transition-transform duration-200 md:hidden'
+        className='fixed top-4 right-4 z-30 flex size-12.5 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-full bg-neutral-950/20 transition-transform duration-200 md:hidden'
       >
         <span aria-hidden='true' className='h-0.5 w-[46%] bg-neutral-50' />
         <span aria-hidden='true' className='h-0.5 w-[46%] bg-neutral-50' />
@@ -115,26 +115,26 @@ export const PortfolioNav = ({ active, onNavigate }: PortfolioNavProps) => {
         ref={menuRef}
         onClose={() => setOpen(false)}
         aria-label='Sections'
-        className='m-0 h-screen max-h-none w-screen max-w-none border-0 bg-neutral-950/90 p-0 text-neutral-50 md:hidden'
+        className='m-0 h-auto max-h-none w-auto max-w-none border-0 bg-neutral-950/90 p-0 text-neutral-50 md:hidden'
       >
         <button
           type='button'
           aria-label='Fermer le menu'
           onClick={() => setOpen(false)}
-          className='fixed top-[4vw] right-[4vw] flex size-[50px] cursor-pointer rotate-180 flex-col items-center justify-center gap-1.5 rounded-full bg-neutral-950/20'
+          className='fixed top-4 right-4 flex size-12.5 cursor-pointer rotate-180 flex-col items-center justify-center gap-1.5 rounded-full bg-neutral-950/20'
         >
           <span
             aria-hidden='true'
-            className='h-0.5 w-[46%] translate-y-[8px] rotate-45 bg-neutral-50'
+            className='h-0.5 w-[46%] translate-y-2 rotate-45 bg-neutral-50'
           />
           <span aria-hidden='true' className='h-0.5 w-[46%] bg-neutral-50 opacity-0' />
           <span
             aria-hidden='true'
-            className='h-0.5 w-[46%] -translate-y-[8px] -rotate-45 bg-neutral-50'
+            className='h-0.5 w-[46%] -translate-y-2 -rotate-45 bg-neutral-50'
           />
         </button>
 
-        <ul className='flex h-screen flex-col flex-wrap items-center justify-between p-10'>
+        <ul className='flex h-full flex-col flex-wrap items-center justify-between p-10'>
           {SECTIONS.map((section) => (
             <li key={section.id} className='w-full'>
               <NavItem
@@ -142,7 +142,7 @@ export const PortfolioNav = ({ active, onNavigate }: PortfolioNavProps) => {
                 active={active}
                 onNavigate={onNavigate}
                 onMenuClose={() => setOpen(false)}
-                className='mx-auto block w-fit border-b-2 text-[18px] font-bold uppercase'
+                className='mx-auto block w-fit border-b-2 text-base font-bold uppercase'
               />
             </li>
           ))}

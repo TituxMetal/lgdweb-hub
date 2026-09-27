@@ -13,7 +13,7 @@ export const BackToTop = () => {
     <button
       type='button'
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className='fixed right-5 bottom-5 z-30 flex size-[50px] cursor-pointer items-center justify-center rounded-full border border-orange-400/40 bg-neutral-900/20 text-[16px] font-bold text-neutral-50/40 transition-colors hover:text-orange-400'
+      className='fixed right-5 bottom-5 z-30 flex size-12.5 cursor-pointer items-center justify-center rounded-full border border-orange-400/40 bg-neutral-900/20 text-base font-bold text-neutral-50/40 transition-colors hover:text-orange-400'
     >
       TOP
     </button>

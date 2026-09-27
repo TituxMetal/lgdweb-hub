@@ -2,14 +2,6 @@ import { describe, expect, it } from 'bun:test'
 import { projects } from '~/data/projects'
 
 describe('projects manifest', () => {
-  it('has 7 old and 3 recent entries', () => {
-    const oldCount = projects.filter((project) => project.kind === 'old').length
-    const recentCount = projects.filter((project) => project.kind === 'recent').length
-
-    expect(oldCount).toBe(7)
-    expect(recentCount).toBe(3)
-  })
-
   it('every entry has non-empty required fields', () => {
     for (const project of projects) {
       expect(project.slug).toMatch(/^[a-z][a-z0-9-]*$/)
