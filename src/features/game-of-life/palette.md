@@ -49,19 +49,25 @@ printed on, not the coloured cells that carry the pattern.
 - `text-orange-600`, `border-orange-600`: the secondary colour the original declared and never used
   (`GlobalStyle.js:5`). It marks the two states the original's markup could not show — the
   simulation running, and the torus mode engaged.
-- the canvas paints three of the entries in its own scope, each tagged where it is written
+- the canvas paints four of the entries in its own scope, each tagged where it is written
   (`lib/canvas.ts`): `#ffccd3` (Tailwind rose-200) as the dead-cell ground, `#171717`
-  (Tailwind neutral-900) as a live cell, `#737373` (Tailwind neutral-500) as the cell border.
+  (Tailwind neutral-900) as a live cell, `#737373` (Tailwind neutral-500) as the cell border, and
+  `#f54900` (Tailwind orange-600) as the keyboard cursor — the declared-but-unused secondary, put to
+  the same work it does on the toolbar.
 - `text-neutral-500` on the hint under the plate: the same grey, as the feature's quiet text.
 
 ## Where the port departs from the original
 
-- **The viewer's controls are built, not ported.** The original's Play button carried no handler,
-  `Toolbar.js` never received `play`/`pause` state, and its `handleCellClick` called
-  `game.toggleCellState(...)` — a method the standalone engine never had, so no click ever reached
-  it. Start/pause, step, clear, randomize, the speed selector and the torus toggle are all
-  additions; the generation counter and the next-generation button are the original's own
-  (`Toolbar.js:11-17`).
+- **The viewer's controls are built, not ported.** The original's Play button carried no handler and
+  `Toolbar.js` never received a running state, so nothing advanced on its own. Clicking a cell did
+  flip it, though — through a copy of the engine the viewer vendored under
+  `tuximetal-game-of-life/src/lib/game-of-life/`, whose working tree defines `toggleCellState`
+  (`src/Game.js:40`) and calls it from the click handler (`src/components/Game.js:39`, wired at
+  `src/components/Cell.js:23`). The packaged engine this port is taken from
+  (`tuximetal-game-of-life-engine/src/Game.js`) has no such method, which is what the archived
+  repositories differ by. Start/pause, step, clear, randomize, the speed selector, the pattern
+  picker and the torus toggle are all additions; the generation counter and the next-generation
+  button are the original's own (`Toolbar.js:11-17`).
 - **The plate is column-sized, not viewport-sized.** The original measured its board in
   `componentDidMount` and cut `floor(width / 40)` columns out of the window, with
   `height: 100vh` on the plate (`Game.js:47-66`, `Wrapper.js:9`). Inside the shell's column that
@@ -69,9 +75,10 @@ printed on, not the coloured cells that carry the pattern.
   the 720px a `max-w-3xl` page keeps between its gutters — and the canvas scales the whole board
   down on a phone rather than dropping columns from it. A 1440×900 window held 36 columns at 40px,
   so the strict ratio against a 720px column is 20px cells and 36 columns; the port trades six
-  columns for size, which keeps the board filling the column and the cells a phone scales to above
-  11px instead of under 10 — drawing by touch needs the larger target. The porting rule this unit
-  settled says a viewport-relative value does not survive the move into a column.
+  columns for size, which keeps the board filling the column and the cells a phone scales it to
+  around 11px on a 390px-wide screen — where the strict ratio would give roughly 10px, and drawing
+  by touch needs the larger target. The porting rule this unit settled says a viewport-relative
+  value does not survive the move into a column.
 - **The title steps down.** The original's `<h1>` was centred at `2.2rem` (`Title.js:3-9`); the
   shell's `Layout` owns the page's `<h1>`, so the feature's title is an `<h2>` at the shell's
   `text-3xl` (30px), 0.85 of the original's 35px — the scale a column asks for.
