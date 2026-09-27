@@ -28,7 +28,7 @@ export const SnakeCanvas = ({ state, blockSize }: SnakeCanvasProps) => {
       ref={canvasRef}
       width={width}
       height={height}
-      className='block h-auto w-full touch-none rounded border-2 border-neutral-700'
+      className='block h-auto w-full touch-none rounded-sm border-2 border-neutral-700'
       style={{ aspectRatio: `${state.gridSize.width} / ${state.gridSize.height}` }}
     />
   )

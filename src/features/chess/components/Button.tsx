@@ -11,7 +11,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'neutral'
  */
 export const buttonClass = (variant: ButtonVariant, disabled = false): string => {
   const base =
-    'rounded-lg px-6 py-3 font-medium transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-900'
+    'rounded-lg px-6 py-3 font-medium transition-colors duration-200 cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-900'
 
   if (variant === 'primary') {
     return `${base} ${
