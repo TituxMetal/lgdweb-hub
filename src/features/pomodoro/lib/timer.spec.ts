@@ -71,7 +71,18 @@ describe('secondsFromMinutes', () => {
     expect(secondsFromMinutes('25')).toBe(1500)
     expect(secondsFromMinutes(' 5 ')).toBe(300)
     expect(secondsFromMinutes('2.9')).toBe(120)
-    expect(secondsFromMinutes('')).toBe(0)
-    expect(secondsFromMinutes('abc')).toBe(0)
+  })
+
+  it('caps a long entry at two hours, so the display fits the column', () => {
+    expect(secondsFromMinutes('120')).toBe(7200)
+    expect(secondsFromMinutes('121')).toBe(7200)
+    expect(secondsFromMinutes('3600')).toBe(7200)
+  })
+
+  it('refuses an entry that is not a duration, so nothing is armed', () => {
+    expect(secondsFromMinutes('-5')).toBeNull()
+    expect(secondsFromMinutes('0')).toBeNull()
+    expect(secondsFromMinutes('')).toBeNull()
+    expect(secondsFromMinutes('abc')).toBeNull()
   })
 })

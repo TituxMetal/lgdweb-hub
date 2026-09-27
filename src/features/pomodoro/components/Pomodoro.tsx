@@ -17,9 +17,12 @@ import {
  *
  * The original's behaviour is kept whole, including what it did *not* offer:
  * there is no pause and no reset, a new length simply replaces the running
- * countdown, and the display starts on the value its markup carried. The
- * countdown also writes the remaining time into the page title and restores the
- * title it found when the visitor leaves, alongside the interval it clears.
+ * countdown, and the display starts on the value its markup carried. The one
+ * bound the port adds is the free field's domain — 1 to 120 minutes, a longer
+ * entry capped, anything below refused — because the original armed whatever the
+ * field held. The countdown also writes the remaining time into the page title and
+ * restores the title it found when the visitor leaves, alongside the interval it
+ * clears.
  */
 export const Pomodoro = () => {
   const [deadline, setDeadline] = useState<number | null>(null)
@@ -71,7 +74,14 @@ export const Pomodoro = () => {
 
   const onSubmit = (event: SubmitEvent<HTMLFormElement>): void => {
     event.preventDefault()
-    start(secondsFromMinutes(minutes))
+
+    const seconds = secondsFromMinutes(minutes)
+
+    // Nothing is armed for an entry the field has no duration for: no display
+    // change and no title write.
+    if (seconds === null) return
+
+    start(seconds)
     setMinutes('')
   }
 
