@@ -99,8 +99,8 @@ export const projects: Project[] = [
     slug: 'tetris',
     title: 'Tetris Game',
     date: '2018-06',
-    description: `Implémentation web du Tetris original avec un mode 1 contre 1. Les pièces tombent, se posent, les lignes pleines disparaissent — et en duel, l'écran se sépare pour afficher la partie de l'adversaire en simultané.`,
-    tech: ['TypeScript', 'React', 'Tailwind', 'Canvas', 'WebSocket'],
+    description: `Implémentation web du Tetris original, jouable au doigt comme au clavier : les pièces tombent, se posent, les lignes pleines disparaissent et le rythme s'accélère. La pièce suivante s'annonce, et la partie recommence d'un bouton quand la pile atteint le haut.`,
+    tech: ['TypeScript', 'React', 'Tailwind'],
     repoUrl: 'https://github.com/TituxMetal/tetrisGame'
   },
   {
