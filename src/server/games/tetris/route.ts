@@ -123,7 +123,11 @@ const dispatch = (connection: Connection, frame: string): void => {
     case 'stateUpdate': {
       const { code, clientId } = connection
 
-      if (code === null || clientId === null || !registry.relay(code, clientId, message.state)) {
+      if (
+        code === null ||
+        clientId === null ||
+        !registry.relay(code, clientId, connection.socket, message.state)
+      ) {
         refuse(connection, 'not-in-room')
       }
     }
