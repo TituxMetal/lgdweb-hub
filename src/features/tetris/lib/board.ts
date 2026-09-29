@@ -1,4 +1,5 @@
-import type { Board, Cell, Piece, Position, Shape } from '../types'
+import { GRID_HEIGHT, GRID_WIDTH } from '~/shared/tetris-protocol'
+import type { Board, Cell, GameState, Piece, Position, Shape } from '../types'
 import { localCells } from './pieces'
 
 /**
@@ -12,9 +13,13 @@ import { localCells } from './pieces'
  * size and the scoring — are the original's, unchanged.
  */
 
-/** The original's `new Arena(12, 20)` (`Tetris.js:7`). */
-export const BOARD_WIDTH = 12
-export const BOARD_HEIGHT = 20
+/**
+ * The original's `new Arena(12, 20)` (`Tetris.js:7`) — the same field the wire
+ * carries, so the arena this feature plays on and the grid a snapshot relays can
+ * never disagree about its size.
+ */
+export const BOARD_WIDTH = GRID_WIDTH
+export const BOARD_HEIGHT = GRID_HEIGHT
 
 const emptyRow = (): Cell[] => new Array<Cell>(BOARD_WIDTH).fill(null)
 
@@ -59,6 +64,15 @@ export const merge = (board: Board, piece: Piece): Board => {
 
   return board.map((row, y) => touched.get(y) ?? row)
 }
+
+/**
+ * The field as it is drawn: the falling piece written into the stack. The state
+ * keeps the two apart until the piece locks, so this is the reading that shows a
+ * piece mid-fall — what `Board` renders, and what a player relays to the player
+ * beside them.
+ */
+export const displayBoard = (state: GameState): Board =>
+  state.piece === null ? state.board : merge(state.board, state.piece)
 
 /**
  * The board with every filled row dropped and the rows above it falling one row,

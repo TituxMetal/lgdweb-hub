@@ -1,3 +1,4 @@
+import { TETROMINOES } from '~/shared/tetris-protocol'
 import type { PieceType, Position, Shape, Turn } from '../types'
 
 /**
@@ -9,8 +10,13 @@ import type { PieceType, Position, Shape, Turn } from '../types'
  * new shape and the shared grids are never written to.
  */
 
-/** The seven tetrominoes in the order the original dealt them (`Piece.js:11`, `'IJLOSTZ'`). */
-export const PIECE_TYPES: readonly PieceType[] = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']
+/**
+ * The seven tetrominoes, in the order the original dealt them (`Piece.js:11`,
+ * `'IJLOSTZ'`). The list is the wire's own (`~/shared/tetris-protocol`), which is
+ * what a relayed board is validated against, so the pieces this game deals and
+ * the pieces a snapshot may carry are one list rather than two that agree.
+ */
+export const PIECE_TYPES: readonly PieceType[] = TETROMINOES
 
 /**
  * The original's `createPiece` grids (`Piece.js:13-57`), `true` where the

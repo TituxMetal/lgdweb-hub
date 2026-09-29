@@ -4,6 +4,6 @@
     "lib": ["ES2022"],
     "types": ["bun"]
   },
-  "include": ["src/server/**/*.ts", "src/data/**/*.ts"],
+  "include": ["src/server/**/*.ts", "src/data/**/*.ts", "src/shared/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }
