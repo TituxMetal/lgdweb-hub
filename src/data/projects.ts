@@ -11,6 +11,8 @@ type ProjectBase = {
   description: string
   tech: string[]
   repoUrl: string
+  /** Site-served screenshot, at `/thumbnails/<slug>.webp`; absent when none was captured. */
+  thumbnail?: string
 }
 
 export type OldProject = ProjectBase & {
@@ -67,6 +69,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/chess.webp',
     slug: 'chess',
     title: 'Chess Game',
     date: '2025-09',
@@ -77,6 +80,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/game-of-life.webp',
     slug: 'game-of-life',
     title: 'Game of Life',
     date: '2019-02',
@@ -86,6 +90,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/memory.webp',
     slug: 'memory',
     title: 'Memory Game',
     date: '2018-09',
@@ -96,6 +101,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/tetris.webp',
     slug: 'tetris',
     title: 'Tetris Game',
     date: '2018-06',
@@ -105,6 +111,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/pomodoro.webp',
     slug: 'pomodoro',
     title: 'Pomodoro Timer',
     date: '2018-05',
@@ -114,6 +121,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/snake.webp',
     slug: 'snake',
     title: 'Snake Game',
     date: '2018-04',
@@ -123,6 +131,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/portfolio.webp',
     slug: 'portfolio',
     title: 'Portfolio',
     date: '2017-05',
@@ -133,6 +142,7 @@ export const projects: Project[] = [
   },
   {
     kind: 'old',
+    thumbnail: '/thumbnails/tic-tac-toe.webp',
     slug: 'tic-tac-toe',
     title: 'Tic Tac Toe',
     date: '2017-05',

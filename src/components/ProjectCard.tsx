@@ -34,6 +34,14 @@ const TechBadges = ({ tech }: { tech: string[] }) => (
 
 const CardBody = ({ project }: ProjectCardProps) => (
   <article className='rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-amber-400'>
+    {project.thumbnail !== undefined && (
+      <img
+        src={project.thumbnail}
+        alt=''
+        loading='lazy'
+        className='mb-4 aspect-video w-full rounded-md border border-zinc-700 object-cover'
+      />
+    )}
     <header className='flex items-baseline gap-3'>
       <h2 className='flex flex-1 items-center gap-2 font-medium text-zinc-100'>
         {project.title}
