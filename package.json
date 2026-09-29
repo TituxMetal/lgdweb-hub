@@ -18,7 +18,7 @@
     "test:watch": "bun test --watch",
     "check": "bun run format:check && bun run lint:check && bun run typecheck && bun run test",
     "docker:build": "scripts/docker-build.sh",
-    "docker:push": "docker push lgdweb/lgdweb-hub:latest"
+    "docker:push": "docker push ghcr.io/tituxmetal/lgdweb-hub:latest"
   },
   "dependencies": {
     "@fontsource/geist-mono": "^5.2.7",

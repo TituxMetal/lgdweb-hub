@@ -1,5 +1,8 @@
 # Stage 1: Install dependencies and build the Vite SPA
-FROM oven/bun:1.3.10-alpine AS build
+# The Bun pin lives here and in .github/workflows/ci.yml (`bun-version`), and it
+# follows the version local development runs: the three must move together, or CI
+# and the image drift.
+FROM oven/bun:1.3.14-alpine AS build
 
 WORKDIR /app
 
@@ -9,10 +12,17 @@ COPY src/ ./src/
 
 RUN bun install --frozen-lockfile
 
+COPY public/ ./public/
+
+# The build emits one document per project, with absolute social URLs: the origin
+# has to be known while Vite runs, so it is a build argument, not a runtime one.
+ARG SITE_URL=https://lgdweb.fr
+ENV SITE_URL=$SITE_URL
+
 RUN bun run build
 
 # Stage 2: Production runtime — Hono on Bun serving the built SPA
-FROM oven/bun:1.3.10-alpine AS production
+FROM oven/bun:1.3.14-alpine AS production
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
