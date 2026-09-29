@@ -46,7 +46,8 @@ a tie too (`stone-300` 6.32 behind `neutral-300`'s 6.22) and resolves the same w
 
 - `bg-neutral-800` on the feature's plate (`components/Tetris.tsx`): the original's `body`, which
   was the whole page. The plate is column-sized rather than viewport-sized — the shell owns the page
-  — and the board is sized against the plate's width instead of the original's `90vh`.
+  — and on a desk it takes that column whole, as the original's body did; the field inside it is
+  sized against the height the page can spare, which is the measure the original's `90vh` took.
 - `bg-neutral-700` on the field and on the preview's box (`components/Board.tsx`,
   `components/NextPiecePreview.tsx`): the fill the original laid down before drawing the cells.
 - `border-neutral-100` on the field, 2px: the local player's `#eee` outline. The base `#707070` is
@@ -70,10 +71,13 @@ a tie too (`stone-300` 6.32 behind `neutral-300`'s 6.22) and resolves the same w
 
 - **The board is a grid of elements, not a canvas.** The port renders it as one element per cell, so
   the original's `context.fillRect` drawing (`Tetris.js:26-43`) becomes a cell with a
-  Tailwind entry. Nothing measures the viewport: the field is 12 × 20 in a 3/5 box sized against the
-  shell's column — a share of the plate wide, capped in rem, and one step larger from the `lg`
-  breakpoint — so it stands whole in a phone's portrait column, with both pad rows under it, and
-  centres on a desktop.
+  Tailwind entry. The field is still 12 × 20 in a 3/5 box, and a phone still measures it as a share
+  of the plate's width, capped in rem, so it stands whole in the portrait column with both pad rows
+  under it. From `lg` it measures the viewport instead, the way the original's `90vh` did: its
+  height is `100vh` less the 30rem the page's chrome and the plate's own score row and pad take,
+  floored at 20rem so a short window cannot collapse it and capped at 44rem — the field and the
+  panel that holds it are one width, which the plate decides is the whole column or, with two
+  players, half of it (`components/PlayerPanel.tsx`).
 - **The scoring rule is reproduced, and the reading of it is not.** The original added
   `rowCount * 10` and incremented `rowCount` per cleared row (`Arena.js:48-69`), so one, two, three
   and four rows score 10, 30, 60 and 100 — cumulative, not the flat 10, 20, 30, 40 a per-row count

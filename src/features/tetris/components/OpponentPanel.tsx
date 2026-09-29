@@ -30,12 +30,16 @@ const EMPTY_GRID = createBoard()
  * A player who is away keeps their place and their last board, marked as away,
  * because the endpoint is holding their seat for them.
  *
+ * The column carries the same `lg` cap as the panel beside it (`PlayerPanel`), so
+ * the two fields are the same size and line up: each is as wide as its half of the
+ * plate allows, and never wider than the page's spare height sets.
+ *
  * Memoised: the plate re-renders on every one of the visitor's own moves, and this
  * panel draws the other seat's board, which none of those moves changed.
  */
 export const OpponentPanel = memo(({ peer }: OpponentPanelProps) => (
-  <div className='flex flex-col items-center gap-4'>
-    <div className='flex w-full max-w-sm items-start justify-between gap-4'>
+  <div className='flex w-full flex-col items-center gap-4 lg:mx-auto lg:max-w-[calc(clamp(20rem,100vh_-_30rem,44rem)*3/5)]'>
+    <div className='flex w-full max-w-sm items-start justify-between gap-4 lg:max-w-none'>
       <dl className='font-mono tabular-nums'>
         <dt className='text-[10px] tracking-wider text-neutral-500 uppercase'>Adversaire</dt>
         <dd className='text-xl font-semibold text-neutral-300'>{peer?.state.score ?? 0}</dd>

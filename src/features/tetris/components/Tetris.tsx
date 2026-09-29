@@ -61,8 +61,13 @@ export const Tetris = () => {
 
       <RoomPanel room={room} notice={notice} onCreateRoom={createRoom} onPlaySolo={playSolo} />
 
+      {/* The plate is the original's grey body. On a desk it takes the shell's
+        column — the field inside it is sized by its own height budget, not by
+        this width — so the grey fills the page the way the original's body did
+        and two boards have room side by side. A phone keeps the narrower plate
+        it was built for. */}
       <div
-        className={`mx-auto flex w-full flex-col items-center gap-4 rounded-md bg-neutral-800 px-4 py-6 ${room === null ? 'max-w-md' : 'max-w-md md:max-w-2xl'}`}
+        className={`mx-auto flex w-full flex-col items-center gap-4 rounded-md bg-neutral-800 px-4 py-6 ${room === null ? 'max-w-md lg:max-w-none' : 'max-w-md md:max-w-none'}`}
       >
         {room === null ? (
           <PlayerPanel {...game} />

@@ -29,6 +29,10 @@ const buttonClass =
  * is the soft drop the original's `drop()` gave the down arrow. Focus is returned
  * to the page after a press, so the next Space reaches the game instead of
  * pressing the button again.
+ *
+ * The pad is as wide as the panel hands it, which on a desk is the field's own
+ * column — `lg:max-w-none` drops the phone's cap so the two rows sit under the
+ * field at its edges instead of floating wider than it.
  */
 export const Controls = ({ running, onMove, onRotate, onSoftDrop, onHardDrop }: ControlsProps) => {
   const controls: readonly Control[] = [
@@ -40,7 +44,7 @@ export const Controls = ({ running, onMove, onRotate, onSoftDrop, onHardDrop }: 
   ]
 
   return (
-    <div className='grid w-full max-w-sm grid-cols-6 gap-2'>
+    <div className='grid w-full max-w-sm grid-cols-6 gap-2 lg:max-w-none'>
       {controls.map((control) => (
         <button
           key={control.label}
