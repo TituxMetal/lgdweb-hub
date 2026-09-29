@@ -206,11 +206,16 @@ export class RoomRegistry {
    * `stateUpdate`: the player's own board, stored as the seat's and carried to
    * the other seat. The sender is never echoed to; the room reads nothing out of
    * the board it carries.
+   *
+   * The socket is named for the reason `leave` names it: a reclaim moves the seat
+   * to a new connection and closes the one left behind, but that socket can still
+   * deliver a frame it had already queued, and the board in it is not the holder's
+   * any more. Only the socket the seat is on writes to it.
    */
-  relay(code: string, clientId: string, state: PeerSnapshot): boolean {
+  relay(code: string, clientId: string, socket: PeerSocket, state: PeerSnapshot): boolean {
     const room = this.rooms.get(code)
     const seat = room?.seats.get(clientId)
-    if (room === undefined || seat === undefined) return false
+    if (room === undefined || seat === undefined || seat.socket !== socket) return false
 
     seat.state = state
 
