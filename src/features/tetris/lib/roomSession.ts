@@ -314,14 +314,22 @@ export const createRoomSession = (
     init: () => {
       intent = { kind: 'init' }
 
-      if (socket === null) open()
-      else ask()
+      if (socket !== null) {
+        ask()
+        return
+      }
+
+      open()
     },
     join: (code) => {
       intent = { kind: 'join', code }
 
-      if (socket === null) open()
-      else ask()
+      if (socket !== null) {
+        ask()
+        return
+      }
+
+      open()
     },
     relay: (snapshot) => {
       if (!seated) return
