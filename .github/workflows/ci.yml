@@ -168,6 +168,11 @@ jobs:
           tags: lgdweb-hub:ci
           cache-from: type:gha
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.10
+
       - name: Boot the built image and probe it
         run: |
           # The image is the artifact that ships, and the checkout is not: the
