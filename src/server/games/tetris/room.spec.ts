@@ -6,7 +6,7 @@ import {
   ROOM_CODE_ALPHABET,
   ROOM_CODE_LENGTH,
   type ServerMessage
-} from '../../../shared/tetrisProtocol'
+} from '~/shared/tetrisProtocol'
 import { createRoomCode, type PeerSocket, RoomRegistry } from './room'
 
 /**
