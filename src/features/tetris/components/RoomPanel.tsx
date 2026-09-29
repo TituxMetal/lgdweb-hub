@@ -89,7 +89,12 @@ const CopyLink = ({ link }: { link: string }) => {
 
 const RoomStatus = ({ room, link }: { room: RoomView; link: string | null }) => (
   <div className='flex flex-wrap items-center justify-between gap-3 rounded-md border border-neutral-500/60 bg-neutral-800 px-4 py-3'>
-    <div className='space-y-1'>
+    {/* Where the room stands is news the visitor did not ask for and cannot see
+        coming — an opponent arriving, the connection going — so the text reads
+        itself out when it changes. The region holds the words alone: the copy
+        button is a control, and it stays outside so an announcement never reads
+        it out along with the status. */}
+    <div className='space-y-1' role='status' aria-live='polite' aria-atomic='true'>
       <p className='text-[10px] tracking-wider text-neutral-400 uppercase'>
         {PHASE_COPY[room.phase]}
       </p>
@@ -106,13 +111,13 @@ const RoomStatus = ({ room, link }: { room: RoomView; link: string | null }) => 
           {link !== null && <p className='max-w-md break-all text-xs text-neutral-500'>{link}</p>}
         </>
       )}
+
+      {!room.connected && room.phase !== 'unreachable' && (
+        <p className='text-xs text-neutral-300'>Connexion perdue — nouvelle tentative…</p>
+      )}
     </div>
 
     {link !== null && <CopyLink link={link} />}
-
-    {!room.connected && room.phase !== 'unreachable' && (
-      <p className='w-full text-xs text-neutral-300'>Connexion perdue — nouvelle tentative…</p>
-    )}
   </div>
 )
 
@@ -125,7 +130,13 @@ const Refusal = ({
   onCreateRoom: () => void
   onPlaySolo: () => void
 }) => (
-  <div className='space-y-3 rounded-md border border-neutral-500/60 bg-neutral-800 px-4 py-3'>
+  // The refusal arrives on a frame of its own — the endpoint saying no after the
+  // visitor asked for something — so it is announced as it appears, with the way
+  // out of it, rather than waiting to be found by someone reading the panel.
+  <div
+    className='space-y-3 rounded-md border border-neutral-500/60 bg-neutral-800 px-4 py-3'
+    role='alert'
+  >
     <div className='space-y-1'>
       <p className='text-sm font-medium text-neutral-100'>Partie impossible</p>
       <p className='text-sm text-neutral-300'>{NOTICE_COPY[notice.code]}</p>
