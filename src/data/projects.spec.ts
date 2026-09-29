@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'bun:test'
+import { existsSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { projects } from '~/data/projects'
 
 describe('projects manifest', () => {
@@ -37,6 +39,18 @@ describe('projects manifest', () => {
       if (previous === undefined || current === undefined) continue
 
       expect(previous.date >= current.date).toBe(true)
+    }
+  })
+
+  it('every old entry ships a thumbnail served from public/, and recent entries ship none', () => {
+    for (const project of projects) {
+      if (project.kind === 'recent') {
+        expect(project.thumbnail).toBeUndefined()
+        continue
+      }
+
+      expect(project.thumbnail).toMatch(/^\/thumbnails\/[a-z0-9-]+\.webp$/)
+      expect(existsSync(resolve('public', project.thumbnail?.replace(/^\//, '') ?? ''))).toBe(true)
     }
   })
 })
