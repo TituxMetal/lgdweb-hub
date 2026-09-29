@@ -7,7 +7,7 @@ import {
   type ServerMessage,
   type SessionPeer,
   type TetrisErrorCode
-} from '../../../shared/tetrisProtocol'
+} from '~/shared/tetrisProtocol'
 
 /**
  * The rooms the endpoint holds, in memory and nowhere else: a room is a code and

@@ -29,6 +29,10 @@ COPY --from=build /app/src/server ./src/server
 # `src/shared`, which both programs import. Without it the runtime exits at
 # module-graph load, before it binds a port.
 COPY --from=build /app/src/shared ./src/shared
+# Bun resolves the `paths` alias while running, not while building, so the runtime
+# stage carries the pair that declares it: the entry point imports
+# `~/shared/tetrisProtocol`, and without these the same module-graph load fails.
+COPY --from=build /app/tsconfig.json /app/tsconfig.base.json ./
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0

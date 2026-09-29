@@ -6,7 +6,7 @@ import {
   parseClientMessage,
   type ServerMessage,
   type TetrisErrorCode
-} from '../../../shared/tetrisProtocol'
+} from '~/shared/tetrisProtocol'
 import { MAX_JOIN_ATTEMPTS, type PeerSocket, RECOVERY_BY_CODE, RoomRegistry } from './room'
 
 /**
