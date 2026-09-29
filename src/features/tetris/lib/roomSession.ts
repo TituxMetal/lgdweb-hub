@@ -275,6 +275,13 @@ export const createRoomSession = (
         ask()
       },
       onFrame: (data) => {
+        // A socket the session has given up on — one the heartbeat dropped, one
+        // the visit closed, or a seat the endpoint handed to another tab — is not
+        // one whose frames this visit still hears. A frame it had already queued
+        // carries the room it was seated in, and reading it would seat the visit
+        // there again: the same identity guard `onClose` applies, for the same race.
+        if (socket !== opening) return
+
         lastFrameAt = Date.now()
         if (typeof data !== 'string') return
 

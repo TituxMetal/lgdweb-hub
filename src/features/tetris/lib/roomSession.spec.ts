@@ -112,6 +112,7 @@ const harness = () => {
   const clock = createClock()
   const sockets: FakeSocket[] = []
   const closes: ('seat-taken' | 'lost' | 'unreachable')[] = []
+  const messages: ServerMessage[] = []
 
   const deps: RoomSessionDeps = {
     connect: (handlers: RoomSocketHandlers) => {
@@ -157,11 +158,15 @@ const harness = () => {
   const session = createRoomSession(
     'client-1',
     () => snapshot,
-    { onOpen: () => {}, onMessage: () => {}, onClose: (cause) => closes.push(cause) },
+    {
+      onOpen: () => {},
+      onMessage: (message) => messages.push(message),
+      onClose: (cause) => closes.push(cause)
+    },
     deps
   )
 
-  return { session, sockets, clock, closes }
+  return { session, sockets, clock, closes, messages }
 }
 
 /** The socket the session opened last; every case gets there by opening one. */
@@ -210,6 +215,28 @@ describe('createRoomSession', () => {
         token: 'seat-token'
       }
     ])
+  })
+
+  it('hears no frame from a socket the session has left behind', () => {
+    const { session, sockets, clock, messages } = harness()
+
+    session.init()
+    const first = current(sockets)
+    first.opened()
+    first.received(sessionInitialized)
+
+    first.dropped()
+    clock.advance(1_000)
+
+    const second = current(sockets)
+    second.opened()
+
+    // One more frame the abandoned socket had already queued — the endpoint's
+    // answer to the room this visit is no longer in. It must not seat the visit
+    // again, hand its token back, or reach the interface.
+    first.received({ type: 'sessionInitialized', code: 'ZZZ999', token: 'stale-token' })
+
+    expect(messages).toEqual([sessionInitialized])
   })
 
   it('rebuilds a lost connection with a doubling backoff, and a seating resets the ladder', () => {
