@@ -25,3 +25,9 @@ One process for everything, served as production serves it:
 ```sh
 bun run build && bun run start   # http://127.0.0.1:3000, nothing else running
 ```
+
+## Deployment
+
+The site ships as one container image on the author's server, behind Nginx Proxy Manager on
+`lgdweb.fr`. See [`docs/deploy.md`](./docs/deploy.md) for the registry, the compose file and the
+manual rollout.

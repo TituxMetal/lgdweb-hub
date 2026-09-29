@@ -21,7 +21,9 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.3.10
+          # The Bun pin lives here and in docker/Dockerfile, and it follows the
+          # version local development runs: the three must move together.
+          bun-version: 1.3.14
 
       - name: Cache Bun dependencies
         uses: actions/cache@v5
@@ -79,6 +81,10 @@ jobs:
           health_status=$(curl --silent --output "$smoke_dir/health.json" --write-out '%{http_code}' "$base_url/api/health")
           health_body=$(cat "$smoke_dir/health.json")
           root_status=$(curl --silent --output "$smoke_dir/root.html" --write-out '%{http_code}' "$base_url/")
+          snake_status=$(curl --silent --output "$smoke_dir/snake.html" --write-out '%{http_code}' "$base_url/projects/snake")
+          thumbnail_status=$(curl --silent --output /dev/null --write-out '%{http_code}' "$base_url/thumbnails/snake.webp")
+          unknown_status=$(curl --silent --output "$smoke_dir/unknown.html" --write-out '%{http_code}' "$base_url/projects/does-not-exist")
+          deep_status=$(curl --silent --output "$smoke_dir/deep.html" --write-out '%{http_code}' "$base_url/projects/chess/01-introduction/01-what-is-chess")
 
           kill "$server_pid"
           wait "$server_pid" 2>/dev/null || true
@@ -103,8 +109,58 @@ jobs:
             exit 1
           fi
 
+          # The build rewrites the apex document's head; `<div id="root">` alone
+          # is already in the template, so it cannot tell a rewritten document
+          # from one whose rewrite silently stopped running.
+          if ! grep --quiet '<!-- lgdweb:metadata -->' "$smoke_dir/root.html" ||
+             ! grep --quiet '<meta property="og:url" content="https://lgdweb.fr/">' "$smoke_dir/root.html"; then
+            echo 'GET / did not serve the rewritten apex document: missing the metadata marker or og:url'
+            exit 1
+          fi
+
+          if [ "$snake_status" != 200 ]; then
+            echo "GET /projects/snake returned $snake_status, expected 200"
+            exit 1
+          fi
+
+          if ! grep --quiet '<meta property="og:title" content="Snake Game"' "$smoke_dir/snake.html"; then
+            echo 'GET /projects/snake did not serve the project document: missing og:title'
+            exit 1
+          fi
+
+          if [ "$thumbnail_status" != 200 ]; then
+            echo "GET /thumbnails/snake.webp returned $thumbnail_status, expected 200"
+            exit 1
+          fi
+
+          if [ "$unknown_status" != 200 ]; then
+            echo "GET /projects/does-not-exist returned $unknown_status, expected 200 (SPA fallback)"
+            exit 1
+          fi
+
+          if ! grep --quiet '<div id="root">' "$smoke_dir/unknown.html"; then
+            echo 'GET /projects/does-not-exist did not serve the SPA shell: missing <div id="root">'
+            exit 1
+          fi
+
+          # A feature's own sub-route carries no file, but it must still unfurl as
+          # its project rather than as the apex.
+          if [ "$deep_status" != 200 ]; then
+            echo "GET /projects/chess/01-introduction/01-what-is-chess returned $deep_status, expected 200"
+            exit 1
+          fi
+
+          if ! grep --quiet '<meta property="og:title" content="Chess Game"' "$smoke_dir/deep.html"; then
+            echo 'a deep project sub-route did not serve its project document: missing og:title'
+            exit 1
+          fi
+
           echo "GET /api/health -> $health_status $health_body"
-          echo 'GET / -> 200 with <div id="root">'
+          echo 'GET / -> 200 with <div id="root"> and the rewritten apex metadata'
+          echo 'GET /projects/snake -> 200 with <meta property="og:title" content="Snake Game"'
+          echo "GET /thumbnails/snake.webp -> $thumbnail_status"
+          echo 'GET /projects/does-not-exist -> 200 with <div id="root">'
+          echo 'GET /projects/chess/01-introduction/01-what-is-chess -> 200 with the Chess Game document'
 
       - name: No component specs
         run: |
@@ -171,7 +227,9 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.3.10
+          # Kept level with docker/Dockerfile and the validate job; the pin tracks
+          # the version local development runs.
+          bun-version: 1.3.14
 
       - name: Boot the built image and probe it
         run: |
@@ -208,6 +266,70 @@ jobs:
           fi
 
           echo "GET /api/health -> $(curl --silent --fail "$base_url/api/health")"
+
+          # The runtime image is the artifact that ships: this is the only place
+          # that proves it carries the build hook's project documents and the
+          # copied screenshots, not just the source tree's route table.
+          snake_status=$(curl --silent --output "$probe_dir/snake.html" --write-out '%{http_code}' "$base_url/projects/snake")
+          thumbnail_status=$(curl --silent --output /dev/null --write-out '%{http_code}' "$base_url/thumbnails/snake.webp")
+          unknown_status=$(curl --silent --output "$probe_dir/unknown.html" --write-out '%{http_code}' "$base_url/projects/does-not-exist")
+          root_status=$(curl --silent --output "$probe_dir/root.html" --write-out '%{http_code}' "$base_url/")
+          deep_status=$(curl --silent --output "$probe_dir/deep.html" --write-out '%{http_code}' "$base_url/projects/chess/01-introduction/01-what-is-chess")
+
+          if [ "$snake_status" != 200 ]; then
+            echo "GET /projects/snake returned $snake_status, expected 200"
+            docker logs "$container"
+            exit 1
+          fi
+
+          if ! grep --quiet '<meta property="og:title" content="Snake Game"' "$probe_dir/snake.html"; then
+            echo 'GET /projects/snake did not serve the project document: missing og:title'
+            docker logs "$container"
+            exit 1
+          fi
+
+          if [ "$thumbnail_status" != 200 ]; then
+            echo "GET /thumbnails/snake.webp returned $thumbnail_status, expected 200"
+            docker logs "$container"
+            exit 1
+          fi
+
+          if [ "$unknown_status" != 200 ]; then
+            echo "GET /projects/does-not-exist returned $unknown_status, expected 200 (SPA fallback)"
+            docker logs "$container"
+            exit 1
+          fi
+
+          if ! grep --quiet '<div id="root">' "$probe_dir/unknown.html"; then
+            echo 'GET /projects/does-not-exist did not serve the SPA shell: missing <div id="root">'
+            docker logs "$container"
+            exit 1
+          fi
+
+          if ! grep --quiet '<!-- lgdweb:metadata -->' "$probe_dir/root.html" ||
+             ! grep --quiet '<meta property="og:url" content="https://lgdweb.fr/">' "$probe_dir/root.html"; then
+            echo 'GET / did not serve the rewritten apex document: missing the metadata marker or og:url'
+            docker logs "$container"
+            exit 1
+          fi
+
+          if [ "$deep_status" != 200 ]; then
+            echo "GET /projects/chess/01-introduction/01-what-is-chess returned $deep_status, expected 200"
+            docker logs "$container"
+            exit 1
+          fi
+
+          if ! grep --quiet '<meta property="og:title" content="Chess Game"' "$probe_dir/deep.html"; then
+            echo 'a deep project sub-route did not serve its project document: missing og:title'
+            docker logs "$container"
+            exit 1
+          fi
+
+          echo 'GET / -> 200 with the rewritten apex metadata'
+          echo 'GET /projects/snake -> 200 with <meta property="og:title" content="Snake Game"'
+          echo "GET /thumbnails/snake.webp -> $thumbnail_status"
+          echo 'GET /projects/does-not-exist -> 200 with <div id="root">'
+          echo 'GET /projects/chess/01-introduction/01-what-is-chess -> 200 with the Chess Game document'
 
           cat > "$probe_dir/upgrade.js" <<'PROBE'
           const endpoint = 'ws://127.0.0.1:3000/ws/tetris'
@@ -265,11 +387,15 @@ jobs:
         uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository }}
+          # The floating tags name production: only a default-branch build may
+          # move them. A manual dispatch from another ref still publishes its
+          # branch and sha tags as a preview, but never overwrites :prod/:latest
+          # with code no pull request merged.
           tags: |
             type=ref,event=branch
             type=sha,prefix=sha-
-            type=raw,value=latest
-            type=raw,value=prod
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=prod,enable=${{ github.ref == 'refs/heads/main' }}
 
       - name: Build and push
         uses: docker/build-push-action@v7

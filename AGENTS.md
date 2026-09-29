@@ -84,6 +84,7 @@ Single-context: `CONTEXT.md` and `docs/adr/` at the root, next to the unit's des
 | `docs/plans/` | `ce-brainstorm` | the requirements-only unified plan — the WHAT |
 | `docs/ideation/` | `ce-ideate` | ranked directions, HTML by default |
 | `docs/solutions/` | `ce-compound` | one solved problem, as a durable learning |
+| `docs/deploy.md` | hand-written | the deployment record: registry, image reference, compose and rollout |
 | `docs/agents/workflow/<slug>.md` | `orchestrator` (`ticket`, `ship`) | the workflow index: stable identifiers only, never state |
 | `CONTEXT.md`, `docs/adr/` | `domain-modeling` | the glossary and the decisions, created when the first one lands |
 | `CONCEPTS.md`, `STRATEGY.md` | `ce-compound`, `ce-strategy` | created when they have a reason to exist — never by hand |

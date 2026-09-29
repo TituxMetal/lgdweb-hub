@@ -1,11 +1,15 @@
 services:
   lgdweb-hub:
-    image: lgdweb/lgdweb-hub:prod
+    image: ghcr.io/tituxmetal/lgdweb-hub:prod
     container_name: lgdweb-hub
     networks:
       - reverse-proxy-nw
       - default-nw
     restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
 
 networks:
   default-nw:
