@@ -8,14 +8,14 @@ import {
   type PeerSnapshot,
   SEAT_TAKEN_CLOSE_CODE,
   type ServerMessage
-} from '~/shared/tetris-protocol'
+} from '~/shared/tetrisProtocol'
 import {
   createRoomSession,
   type RoomSessionDeps,
   type RoomSocket,
   type RoomSocketHandlers,
   type RoomTimers
-} from './room-session'
+} from './roomSession'
 
 /**
  * The visitor's end of the socket, observed where it is supposed to be

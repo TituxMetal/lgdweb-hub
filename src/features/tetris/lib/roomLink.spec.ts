@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'bun:test'
-import { clearCodeFragment, codeFromFragment, roomLink, writeCodeFragment } from './room-link'
+import { clearCodeFragment, codeFromFragment, roomLink, writeCodeFragment } from './roomLink'
 
 /**
  * The fragment, which is the whole invitation: the code the visitor arrived with,

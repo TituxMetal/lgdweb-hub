@@ -7,7 +7,7 @@ import {
   type PeerSnapshot,
   ROOM_CODE_LENGTH,
   type ServerMessage
-} from '../../../shared/tetris-protocol'
+} from '../../../shared/tetrisProtocol'
 import server from '../../index'
 import { MAX_JOIN_ATTEMPTS } from './room'
 import { tetrisRoute } from './route'

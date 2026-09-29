@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test'
-import { ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '../../../shared/tetris-protocol'
+import { ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '../../../shared/tetrisProtocol'
 import { createRoomCode } from './room'
 
 /**

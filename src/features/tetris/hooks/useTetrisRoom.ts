@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { RecoveryAction, SessionPeer, TetrisErrorCode } from '~/shared/tetris-protocol'
-import { clientId } from '../lib/client-id'
-import { clearCodeFragment, codeFromFragment, writeCodeFragment } from '../lib/room-link'
-import { createRoomSession, type RoomSession } from '../lib/room-session'
+import type { RecoveryAction, SessionPeer, TetrisErrorCode } from '~/shared/tetrisProtocol'
+import { clientId } from '../lib/clientId'
+import { clearCodeFragment, codeFromFragment, writeCodeFragment } from '../lib/roomLink'
+import { createRoomSession, type RoomSession } from '../lib/roomSession'
 import { toPeerSnapshot } from '../lib/snapshot'
 import type { GameState } from '../types'
 

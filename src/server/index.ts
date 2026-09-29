@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { websocket } from 'hono/bun'
-import { MAX_MESSAGE_LENGTH } from '../shared/tetris-protocol'
+import { MAX_MESSAGE_LENGTH } from '../shared/tetrisProtocol'
 import { tetrisRoute } from './games/tetris/route'
 import { loadConfig } from './lib/config'
 import { healthRoute } from './routes/health'

@@ -1,5 +1,5 @@
 import { projectPath } from '~/data/projects'
-import { ROOM_CODE_LENGTH } from '~/shared/tetris-protocol'
+import { ROOM_CODE_LENGTH } from '~/shared/tetrisProtocol'
 
 /**
  * The room code lives in the page's fragment and nowhere else.
