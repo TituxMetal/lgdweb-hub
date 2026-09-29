@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test'
-import { GRID_HEIGHT, GRID_WIDTH, parseClientMessage } from '~/shared/tetris-protocol'
+import { GRID_HEIGHT, GRID_WIDTH, parseClientMessage } from '~/shared/tetrisProtocol'
 import type { GameState } from '../types'
 import { createInitialState } from './game'
 import { createShape } from './pieces'

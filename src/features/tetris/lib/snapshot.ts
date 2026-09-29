@@ -1,4 +1,4 @@
-import type { PeerSnapshot } from '~/shared/tetris-protocol'
+import type { PeerSnapshot } from '~/shared/tetrisProtocol'
 import type { GameState } from '../types'
 import { displayBoard } from './board'
 

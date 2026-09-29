@@ -6,8 +6,8 @@ import {
   parseServerMessage,
   SEAT_TAKEN_CLOSE_CODE,
   type ServerMessage
-} from '~/shared/tetris-protocol'
-import { readSeatToken, writeSeatToken } from './seat-token'
+} from '~/shared/tetrisProtocol'
+import { readSeatToken, writeSeatToken } from './seatToken'
 
 /**
  * The visitor's end of the endpoint: one socket, the heartbeat that watches it,

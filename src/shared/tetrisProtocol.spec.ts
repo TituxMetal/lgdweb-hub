@@ -8,7 +8,7 @@ import {
   type PeerSnapshot,
   parseClientMessage,
   parseServerMessage
-} from './tetris-protocol'
+} from './tetrisProtocol'
 
 /**
  * The boundary itself: what the endpoint accepts as a message and what it

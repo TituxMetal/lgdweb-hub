@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { PeerStatus, SessionPeer } from '~/shared/tetris-protocol'
+import type { PeerStatus, SessionPeer } from '~/shared/tetrisProtocol'
 import { createBoard } from '../lib/board'
 import { Board } from './Board'
 

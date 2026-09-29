@@ -1,4 +1,4 @@
-import { TETROMINOES } from '~/shared/tetris-protocol'
+import { TETROMINOES } from '~/shared/tetrisProtocol'
 import type { PieceType, Position, Shape, Turn } from '../types'
 
 /**
@@ -12,7 +12,7 @@ import type { PieceType, Position, Shape, Turn } from '../types'
 
 /**
  * The seven tetrominoes, in the order the original dealt them (`Piece.js:11`,
- * `'IJLOSTZ'`). The list is the wire's own (`~/shared/tetris-protocol`), which is
+ * `'IJLOSTZ'`). The list is the wire's own (`~/shared/tetrisProtocol`), which is
  * what a relayed board is validated against, so the pieces this game deals and
  * the pieces a snapshot may carry are one list rather than two that agree.
  */

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import type { RecoveryAction, TetrisErrorCode } from '~/shared/tetris-protocol'
+import type { RecoveryAction, TetrisErrorCode } from '~/shared/tetrisProtocol'
 import type { RoomNotice, RoomPhase, RoomView } from '../hooks/useTetrisRoom'
-import { roomLink } from '../lib/room-link'
+import { roomLink } from '../lib/roomLink'
 
 type RoomPanelProps = {
   /** Where the visitor's room stands, or `null` while they play alone. */

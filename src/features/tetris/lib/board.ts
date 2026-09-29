@@ -1,4 +1,4 @@
-import { GRID_HEIGHT, GRID_WIDTH } from '~/shared/tetris-protocol'
+import { GRID_HEIGHT, GRID_WIDTH } from '~/shared/tetrisProtocol'
 import type { Board, Cell, GameState, Piece, Position, Shape } from '../types'
 import { localCells } from './pieces'
 
