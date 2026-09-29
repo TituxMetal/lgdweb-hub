@@ -25,6 +25,10 @@ RUN bun install --frozen-lockfile --production
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/src/server ./src/server
+# The server's import graph leaves its own tree: the wire vocabulary lives in
+# `src/shared`, which both programs import. Without it the runtime exits at
+# module-graph load, before it binds a port.
+COPY --from=build /app/src/shared ./src/shared
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
