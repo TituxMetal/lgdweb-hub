@@ -38,12 +38,8 @@ environment:
 No port is published: Nginx Proxy Manager reaches the container by name as `lgdweb-hub:3000` on
 the shared network. Port 3000 is free on `mary`.
 
-To roll the stack onto a newly published image, in Portainer pull and recreate, or on the host:
-
-```sh
-docker compose pull
-docker compose up -d
-```
+To roll the stack onto a newly published image, use Portainer's **Pull and redeploy** action on
+the stack: it re-pulls `:prod` and recreates the container with the same configuration.
 
 ## DNS
 
