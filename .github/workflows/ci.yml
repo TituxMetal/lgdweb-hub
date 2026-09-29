@@ -166,7 +166,7 @@ jobs:
           push: false
           load: true
           tags: lgdweb-hub:ci
-          cache-from: type:gha
+          cache-from: type=gha
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
