@@ -87,7 +87,7 @@ Single-context: `CONTEXT.md` and `docs/adr/` at the root, next to the unit's des
 | `docs/deploy.md` | hand-written | the deployment record: registry, image reference, compose and rollout |
 | `docs/agents/workflow/<slug>.md` | `orchestrator` (`ticket`, `ship`) | the workflow index: stable identifiers only, never state |
 | `CONTEXT.md`, `docs/adr/` | `domain-modeling` | the glossary and the decisions, created when the first one lands |
-| `CONCEPTS.md`, `STRATEGY.md` | `ce-compound`, `ce-strategy` | created when they have a reason to exist — never by hand |
+| `CONCEPTS.md`, `STRATEGY.md` | `ce-compound`, `ce-strategy` | created when they have a reason to exist — never by hand; `CONCEPTS.md` is the shared domain vocabulary, worth reading when orienting to an unfamiliar area |
 
 The workflow index sits at `docs/agents/workflow/`; the spine is its only writer.
 
