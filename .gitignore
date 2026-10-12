@@ -8,3 +8,11 @@ dist/
 .env
 .env.local
 .env.*.local
+
+# Compound Engineering
+.compound-engineering/*.local.yaml
+.context/compound-engineering/
+
+# Principal workflow reports and pi harness state (local, never product)
+.principal/
+.pi/
