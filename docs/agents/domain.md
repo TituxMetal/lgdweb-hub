@@ -18,9 +18,9 @@ This repo's own records sit alongside them and are read the same way:
 descend from.
 
 If any of these files don't exist, **proceed silently**. Don't flag their absence; don't
-suggest creating them upfront. The `/domain-modeling` skill (reached via `/grill-with-docs`
-and `/improve-codebase-architecture`) creates them lazily when terms or decisions actually get
-resolved.
+suggest creating them upfront. `CONTEXT.md` and `docs/adr/` are created by the `/domain-modeling`
+skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) when terms or decisions
+actually get resolved; `CONCEPTS.md` is written by `ce-compound` and `ce-compound-refresh`.
 
 ## File structure
 

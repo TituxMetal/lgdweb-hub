@@ -1,17 +1,17 @@
 # Concepts
 
 Shared domain vocabulary for this project — entities, named processes, and status concepts with
-project-specific meaning. Seeded with core domain vocabulary, then accretes as ce-compound and
-ce-compound-refresh process learnings; direct edits are fine. Glossary only, not a spec or
-catch-all.
+project-specific meaning. Seeded from the declared domain model, then kept by `ce-compound` and
+`ce-compound-refresh` as they process learnings; a correction against the code is welcome at any
+time. Glossary only, not a spec or catch-all.
 
 ## Relationships
 
 A Project manifest entry is described by exactly one Old project or Recent project. An Old project
 is rendered by at most one Feature, resolved through its Slug; a Recent project has no Feature and
 lives off-site. A Feature belongs to exactly one identity level — the shell's, or its own era's.
-The realtime vocabulary is unrelated to the rest: a Room holds Seats, and a Seat is bound to one
-Peer connection.
+The realtime vocabulary is unrelated to the rest: a Room holds Seats, and a Seat is bound to at most
+one connection at a time — a Seat outlives the connection that held it.
 
 ## The showroom
 
@@ -59,8 +59,8 @@ does not own their appearance.
 
 ### Slug
 The short stable identifier a project is addressed by — in its URL, its manifest entry, its feature
-folder and its registry key. The four must agree; a slug present in one and absent from another is a
-disagreement the showroom must not ship.
+folder and its registry key. The same slug names the same project in all four; where the four
+disagree, only one direction is a defect, and the Feature registry entry states which.
 
 ## The codebase
 
@@ -99,6 +99,12 @@ facts is the defect, not the redundancy.
 The map from slug to the lazily-loaded feature that renders it — the one line an author adds when a
 project lands, and the seam the manifest is checked against. It is not a second manifest: it holds
 no project facts, only the wiring.
+
+The two lists disagree in one direction only. Every registry slug must appear in the manifest — a
+feature reachable only by URL is a project the showroom cannot present, and that is the
+release-blocking failure. The other direction, a manifest entry with no registry slug, is ordinary:
+a recent project has no feature here, and an old project whose feature has not landed renders as a
+Placeholder.
 
 ### Route map
 The central declaration of which URLs the app answers and what each renders. It stays minimal and
@@ -159,9 +165,12 @@ the design accepts. A room carries a player's board to the other seat and never 
 itself — it holds no game rules and decides nothing.
 
 ### Seat
-A player's place in a room, scoped to one connection. A seat is released when its occupant leaves,
-and held briefly after a connection drops so a refresh or a quick reconnect reclaims it rather than
-arriving as a newcomer — a room with no seats left is gone.
+A player's place in a room, scoped to one identity rather than one connection. A seat is released
+when its occupant leaves, and held briefly after a connection drops so a refresh or a quick
+reconnect reclaims it rather than arriving as a newcomer — a room with no seats left is gone.
+A seat is therefore not tied to the connection that created it: during the grace it holds no
+connection at all, and a reclaim moves it to the new one, closing the connection it displaced so the
+abandoned tab does not fight the one that took its place.
 
 ### Seat token
 A seat's proof of ownership, known to its holder alone. Identity alone does not make someone a seat's
@@ -185,7 +194,7 @@ A structured rejection of a request the room will not serve, carrying a code nam
 answer, never a dropped connection or a thrown error, and the code is what the sender is told.
 
 ### Recovery action
-What a refused player can do about it — asked for a fresh room, or play alone. It is the endpoint's
+What a refused player can do about it — ask for a fresh room, or play alone. It is the endpoint's
 policy, told with the refusal code rather than beside it, so every refusal names both what happened
 and what to do next.
 
