@@ -111,6 +111,10 @@ A task is done when:
 - [ ] what was learned and will serve again is banked (`ce-compound`) — once really
       implemented **and** tested, not before.
 
+## Writing to the user
+
+Write every report, summary, or handoff to the user through the `ce-noslop` skill. This applies when you are the top-level agent writing to the user, not when you are a subagent reporting to its caller. Do not apply it to code, config, verbatim quotes, or text the user asked to post as written.
+
 ## Discipline
 
 Skill routing, folder conventions and adoption rules live at the workspace root:
