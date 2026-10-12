@@ -8,6 +8,8 @@ codebase.
 ## Before exploring, read these
 
 - **`CONTEXT.md`** at the repo root — the glossary.
+- **`CONCEPTS.md`** at the repo root — the shared domain vocabulary, broad enough to orient in an
+  area you haven't worked in yet.
 - **`docs/adr/`**: read ADRs that touch the area you're about to work in.
 
 This repo's own records sit alongside them and are read the same way:
@@ -25,6 +27,7 @@ resolved.
 ```
 /
 ├── CONTEXT.md                  ← created when the first term is resolved
+├── CONCEPTS.md                 ← shared domain vocabulary, seeded then accreted
 ├── docs/adr/                   ← created when the first decision lands
 │   ├── 0001-…
 │   └── 0002-…
